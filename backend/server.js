@@ -14,7 +14,7 @@ const normalizePort = (val) => {
   return false;
 };
 
-const port = normalizePort(process.env.PORT || "3000"); // Possibilité de cacher un port grâce au .env
+const port = normalizePort(process.env.PORT);
 
 app.set("port", port);
 

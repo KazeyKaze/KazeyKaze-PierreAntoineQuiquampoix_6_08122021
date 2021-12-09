@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
+const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
 ///////////////////////////////
@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 ///////////////////////////////
 exports.signup = (req, res, next) => {
   bcrypt
-    .hash(req.body.password, 10) // Je hash le MDP et le sel 10 fois
+    .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
         email: req.body.email,
@@ -38,7 +38,6 @@ exports.signup = (req, res, next) => {
 ///////////////////////////////
 exports.login = (req, res, next) => {
   User.findOne({
-    // Je cible et vérifie l'existence de l'utilisateur
     email: req.body.email,
   })
     .then((user) => {
@@ -48,7 +47,7 @@ exports.login = (req, res, next) => {
         });
       }
       bcrypt
-        .compare(req.body.password, user.password) // Je compare le MDP entré et celui de la DB
+        .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
             return res.status(401).json({
@@ -59,12 +58,10 @@ exports.login = (req, res, next) => {
             userId: user._id,
             token: jwt.sign(
               {
-                // J'assigne un token à l'utilisateur
                 userId: user._id,
               },
               process.env.JWT_SECRET_KEY,
               {
-                // Je cache cette donnée avec le .env
                 expiresIn: "24h",
               }
             ),
