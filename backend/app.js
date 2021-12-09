@@ -1,13 +1,40 @@
 const express = require("express");
+const { Sequelize } = require("sequelize");
 const saucesRoutes = require("./routes/sauce.routes");
 const userRoutes = require("./routes/user.routes");
 const path = require("path");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
+const app = express();
+
 ///////////////////////////////
 // MYSQL CONNECTION
 ///////////////////////////////
+const sequelize = new Sequelize(
+  `${process.env.DB_NAME}`,
+  `${process.env.DB_USER}`,
+  `${process.env.DB_PASS}`,
+  {
+    dialect: "mysql",
+    host: "localhost",
+
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000,
+    },
+  }
+);
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection to the database MySQL established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database MySQL:", err);
+  });
 
 ///////////////////////////////
 // CORS
