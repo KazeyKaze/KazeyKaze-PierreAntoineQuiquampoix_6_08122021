@@ -1,6 +1,6 @@
 const express = require("express");
 const { Sequelize } = require("sequelize");
-const saucesRoutes = require("./routes/sauce.routes");
+const postRoutes = require("./routes/post.routes");
 const userRoutes = require("./routes/user.routes");
 const path = require("path");
 const helmet = require("helmet");
@@ -62,7 +62,7 @@ const limiter = rateLimit({
 
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("/api/sauces", saucesRoutes);
+app.use("/api/posts", postRoutes);
 app.use("/api/auth", userRoutes);
 app.use(helmet());
 app.use(limiter);
