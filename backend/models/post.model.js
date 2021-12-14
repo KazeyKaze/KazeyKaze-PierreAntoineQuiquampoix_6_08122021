@@ -39,7 +39,7 @@ Post.sync({ force: true }).then(() => {
   return Post.create({
     firstName: "Pierre-Antoine",
     lastName: "Quiquampoix",
-    texte: "Voici le premier post !",
+    text: "Voici le premier post !",
     image:
       "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Ffr%2Fphotos%2Fimage-en-couleur&psig=AOvVaw1gYZIn_qeQ_2BVSUd-P9oB&ust=1639558165567000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCP9aT04vQCFQAAAAAdAAAAABAD",
   });
