@@ -1,4 +1,4 @@
-const Post = require("../models/post.model");
+const PostModel = require("../models/post.model");
 const fs = require("fs");
 
 ///////////////////////////////
@@ -7,7 +7,7 @@ const fs = require("fs");
 exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
-  const post = new Post({
+  const post = new PostModel({
     ...postObject,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
@@ -31,7 +31,7 @@ exports.createPost = (req, res, next) => {
 // PUT
 ///////////////////////////////
 exports.modifyPost = (req, res, next) => {
-  Post.findOne({
+  PostModel.findOne({
     _id: req.params.id,
   }).then((post) => {
     if (post.userId === req.token.userId) {
@@ -45,7 +45,7 @@ exports.modifyPost = (req, res, next) => {
         : {
             ...req.body,
           };
-      Post.updateOne(
+      PostModel.updateOne(
         {
           _id: req.params.id,
         },
@@ -76,14 +76,14 @@ exports.modifyPost = (req, res, next) => {
 // DELETE
 ///////////////////////////////
 exports.deletePost = (req, res, next) => {
-  Post.findOne({
+  PostModel.findOne({
     _id: req.params.id,
   })
     .then((post) => {
       if (post.userId === req.token.userId) {
         const filename = post.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
-          Post.deleteOne({
+          PostModel.deleteOne({
             _id: req.params.id,
           })
             .then(() =>
@@ -114,7 +114,7 @@ exports.deletePost = (req, res, next) => {
 // GET ALL
 ///////////////////////////////
 exports.getAllPost = (req, res, next) => {
-  Post.find()
+  PostModel.find()
     .then((posts) => {
       res.status(200).json(posts);
     })
@@ -129,7 +129,7 @@ exports.getAllPost = (req, res, next) => {
 // GET BY ID
 ///////////////////////////////
 exports.getOnePost = (req, res, next) => {
-  Post.findOne({
+  PostModel.findOne({
     _id: req.params.id,
   })
     .then((post) => {
