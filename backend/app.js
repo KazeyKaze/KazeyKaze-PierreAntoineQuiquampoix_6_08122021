@@ -1,10 +1,10 @@
 const express = require("express");
-const { Sequelize } = require("sequelize");
 const postRoutes = require("./routes/post.routes");
 const userRoutes = require("./routes/user.routes");
 const path = require("path");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const initdb = require("./models/index");
 
 const app = express();
 
@@ -25,34 +25,6 @@ app.use((req, res, next) => {
 });
 
 ///////////////////////////////
-// MYSQL CONNECTION
-///////////////////////////////
-const sequelize = new Sequelize(
-  `${process.env.DB_NAME}`,
-  `${process.env.DB_USER}`,
-  `${process.env.DB_PASS}`,
-  {
-    dialect: "mysql",
-    host: "localhost",
-
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000,
-    },
-  }
-);
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection to the database MySQL established successfully.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database MySQL:", err);
-  });
-
-///////////////////////////////
 // RATE LIMIT
 ///////////////////////////////
 const limiter = rateLimit({
@@ -60,11 +32,19 @@ const limiter = rateLimit({
   max: 100,
 });
 
-app.use(express.json());
-app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("/api/posts", postRoutes);
-app.use("/api/auth", userRoutes);
-app.use(helmet());
-app.use(limiter);
+initdb()
+  .then(() => {
+    app.use(express.json());
+    app.use("/images", express.static(path.join(__dirname, "images")));
+    app.use("/api/posts", postRoutes);
+    app.use("/api/auth", userRoutes);
+    app.use(helmet());
+    app.use(limiter);
+
+    console.log("Connection to the database MySQL established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database MySQL:", err);
+  });
 
 module.exports = app;

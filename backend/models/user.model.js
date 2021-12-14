@@ -1,25 +1,20 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const db = require("../config/database");
+const DataTypes = require("sequelize");
 
 ///////////////////////////////
 // USER MODEL
 ///////////////////////////////
-const sequelize = new Sequelize(
-  `${process.env.DB_NAME}`,
-  `${process.env.DB_USER}`,
-  `${process.env.DB_PASS}`,
-  {
-    dialect: "mysql",
-    host: "localhost",
 
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000,
-    },
-  }
-);
-
-const UserModel = sequelize.define("User", {
+const User = db.define("User", {
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -27,11 +22,9 @@ const UserModel = sequelize.define("User", {
   lastName: {
     type: DataTypes.STRING,
   },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+  },
 });
 
-UserModel.sync({ force: true }).then(() => {
-  return UserModel.create({
-    firstName: "Pierre-Antoine",
-    lastName: "Quiquampoix",
-  });
-});
+module.exports = User;

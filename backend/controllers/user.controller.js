@@ -55,10 +55,11 @@ exports.login = (req, res, next) => {
             });
           }
           res.status(200).json({
-            userId: user._id,
             token: jwt.sign(
               {
-                userId: user._id,
+                userId: user.id,
+                firstName: user.firstName,
+                isAdmin: user.isAdmin,
               },
               process.env.JWT_SECRET_KEY,
               {
