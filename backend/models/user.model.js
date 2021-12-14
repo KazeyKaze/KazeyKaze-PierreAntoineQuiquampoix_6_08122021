@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const User = sequelize.define("User", {
+const UserModel = sequelize.define("User", {
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -29,8 +29,8 @@ const User = sequelize.define("User", {
   },
 });
 
-User.sync({ force: true }).then(() => {
-  return User.create({
+UserModel.sync({ force: true }).then(() => {
+  return UserModel.create({
     firstName: "Pierre-Antoine",
     lastName: "Quiquampoix",
   });
