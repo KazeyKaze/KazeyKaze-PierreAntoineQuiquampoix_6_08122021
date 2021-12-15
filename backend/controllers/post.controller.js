@@ -5,16 +5,14 @@ const fs = require("fs");
 // POST
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
-  delete postObject._id;
   const post = new PostModel({
-    ...postObject,
+    text: req.body.text,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
     }`,
   });
   post
-    .save()
+    .add()
     .then(() =>
       res.status(201).json({
         message: "Post enregistré !",
