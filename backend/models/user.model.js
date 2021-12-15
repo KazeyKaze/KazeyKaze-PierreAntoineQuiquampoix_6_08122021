@@ -21,6 +21,7 @@ const User = db.define("User", {
   },
   lastName: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   isAdmin: {
     type: DataTypes.BOOLEAN,
