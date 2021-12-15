@@ -40,7 +40,7 @@ exports.signup = (req, res, next) => {
 ///////////////////////////////
 exports.login = (req, res, next) => {
   UserModel.findOne({
-    email: req.body.email,
+    where: { email: req.body.email },
   })
     .then((user) => {
       if (!user) {
