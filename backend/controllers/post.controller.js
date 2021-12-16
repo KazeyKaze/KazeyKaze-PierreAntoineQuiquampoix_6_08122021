@@ -5,24 +5,30 @@ const fs = require("fs");
 // POST
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
-  const post = new PostModel({
-    text: req.body.text,
-    UserId: req.body.userId,
-    // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    // });
-  });
-  post
-    .save()
-    .then(() =>
-      res.status(201).json({
-        message: "Post enregistré !",
-      })
-    )
-    .catch((error) =>
-      res.status(400).json({
-        error,
-      })
-    );
+  if (!req.file && req.body.text == "") {
+    return res
+      .status(400)
+      .json({ message: "Votre post ne peut pas être vide." });
+  } else {
+    const post = new PostModel({
+      text: req.body.text,
+      UserId: req.body.userId,
+      // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      // });
+    });
+    post
+      .save()
+      .then(() =>
+        res.status(201).json({
+          message: "Post enregistré !",
+        })
+      )
+      .catch((error) =>
+        res.status(400).json({
+          error,
+        })
+      );
+  }
 };
 
 ///////////////////////////////
@@ -30,9 +36,9 @@ exports.createPost = (req, res, next) => {
 ///////////////////////////////
 exports.modifyPost = (req, res, next) => {
   PostModel.findOne({
-    _id: req.params.id,
+    where: { id: req.body.id },
   }).then((post) => {
-    if (post.userId === req.token.userId) {
+    if (post.userId === req.token.id || req.user.isAdmin === 1) {
       const postObject = req.file
         ? {
             ...JSON.parse(req.body.post),
@@ -111,8 +117,8 @@ exports.deletePost = (req, res, next) => {
 ///////////////////////////////
 // GET ALL
 ///////////////////////////////
-exports.getAllPost = (req, res, next) => {
-  PostModel.find()
+exports.getAllPosts = (req, res, next) => {
+  PostModel.findAll()
     .then((posts) => {
       res.status(200).json(posts);
     })
@@ -128,7 +134,7 @@ exports.getAllPost = (req, res, next) => {
 ///////////////////////////////
 exports.getOnePost = (req, res, next) => {
   PostModel.findOne({
-    _id: req.params.id,
+    where: { id: req.body.id },
   })
     .then((post) => {
       res.status(200).json(post);
