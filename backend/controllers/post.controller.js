@@ -2,7 +2,7 @@ const PostModel = require("../models/post.model");
 const fs = require("fs");
 
 ///////////////////////////////
-// POST
+// POST (rajouter les images)
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
   if (!req.file && req.body.text == "") {
@@ -11,10 +11,8 @@ exports.createPost = (req, res, next) => {
       .json({ message: "Votre post ne peut pas être vide." });
   } else {
     const post = new PostModel({
+      UserId: req.token.userId,
       text: req.body.text,
-      UserId: req.body.userId,
-      // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-      // });
     });
     post
       .save()
@@ -32,31 +30,16 @@ exports.createPost = (req, res, next) => {
 };
 
 ///////////////////////////////
-// PUT
+// PUT (rajouter les images)
 ///////////////////////////////
 exports.modifyPost = (req, res, next) => {
   PostModel.findOne({
-    where: { id: req.body.id },
+    where: { id: req.params.id },
   }).then((post) => {
-    if (post.userId === req.token.id || req.user.isAdmin === 1) {
-      const postObject = req.file
-        ? {
-            ...JSON.parse(req.body.post),
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${
-              req.file.filename
-            }`,
-          }
-        : {
-            ...req.body,
-          };
-      PostModel.updateOne(
-        {
-          _id: req.params.id,
-        },
-        {
-          ...postObject,
-          _id: req.params.id,
-        }
+    if (post.UserId === req.token.userId || req.token.isAdmin === true) {
+      PostModel.update(
+        { text: req.body.text },
+        { where: { id: req.params.id } }
       )
         .then(() =>
           res.status(200).json({
@@ -81,26 +64,23 @@ exports.modifyPost = (req, res, next) => {
 ///////////////////////////////
 exports.deletePost = (req, res, next) => {
   PostModel.findOne({
-    _id: req.params.id,
+    where: { id: req.params.id },
   })
     .then((post) => {
-      if (post.userId === req.token.userId) {
-        const filename = post.imageUrl.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-          PostModel.deleteOne({
-            _id: req.params.id,
-          })
-            .then(() =>
-              res.status(200).json({
-                message: "Post supprimé !",
-              })
-            )
-            .catch((error) =>
-              res.status(400).json({
-                error,
-              })
-            );
-        });
+      if (post.UserId === req.token.userId || req.token.isAdmin === true) {
+        PostModel.destroy({
+          where: { id: req.params.id },
+        })
+          .then(() =>
+            res.status(200).json({
+              message: "Post supprimé !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
       } else {
         res.status(403).json({
           message: "403: unauthorized request !",
@@ -134,7 +114,7 @@ exports.getAllPosts = (req, res, next) => {
 ///////////////////////////////
 exports.getOnePost = (req, res, next) => {
   PostModel.findOne({
-    where: { id: req.body.id },
+    where: { id: req.params.id },
   })
     .then((post) => {
       res.status(200).json(post);
