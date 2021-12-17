@@ -82,3 +82,38 @@ exports.login = (req, res, next) => {
       })
     );
 };
+
+///////////////////////////////
+// DELETE
+///////////////////////////////
+exports.deleteUser = (req, res, next) => {
+  UserModel.findOne({
+    where: { id: req.params.id },
+  })
+    .then((user) => {
+      if (user.id === req.token.userId || req.token.isAdmin === true) {
+        UserModel.destroy({
+          where: { id: req.params.id },
+        })
+          .then(() =>
+            res.status(200).json({
+              message: "Utilisateur supprimé !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
+      } else {
+        res.status(403).json({
+          message: "403: unauthorized request !",
+        });
+      }
+    })
+    .catch((error) =>
+      res.status(500).json({
+        error,
+      })
+    );
+};

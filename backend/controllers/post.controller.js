@@ -60,7 +60,7 @@ exports.modifyPost = (req, res, next) => {
 };
 
 ///////////////////////////////
-// DELETE
+// DELETE (rajouter les images)
 ///////////////////////////////
 exports.deletePost = (req, res, next) => {
   PostModel.findOne({
