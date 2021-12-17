@@ -37,6 +37,11 @@ exports.modifyPost = (req, res, next) => {
     where: { id: req.params.id },
   }).then((post) => {
     if (post.UserId === req.token.userId || req.token.isAdmin === true) {
+      if (!req.file && req.body.text == "") {
+        return res
+          .status(400)
+          .json({ message: "Votre post ne peut pas être vide." });
+      }
       PostModel.update(
         { text: req.body.text },
         { where: { id: req.params.id } }

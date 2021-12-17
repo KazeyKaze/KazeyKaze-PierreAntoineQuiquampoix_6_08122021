@@ -1,6 +1,7 @@
 const express = require("express");
 const postRoutes = require("./routes/post.routes");
 const userRoutes = require("./routes/user.routes");
+const commentRoutes = require("./routes/comment.routes");
 const path = require("path");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -38,6 +39,7 @@ initdb()
     app.use("/images", express.static(path.join(__dirname, "images")));
     app.use("/api/posts", postRoutes);
     app.use("/api/auth", userRoutes);
+    app.use("/api/comments", commentRoutes);
     app.use(helmet());
     app.use(limiter);
 
