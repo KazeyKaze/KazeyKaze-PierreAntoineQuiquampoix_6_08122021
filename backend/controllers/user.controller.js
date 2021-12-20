@@ -1,11 +1,42 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
+const passwordValidator = require("password-validator");
+
+///////////////////////////////
+// PASSWORD VALIDATOR SCHEMA
+///////////////////////////////
+const schema = new passwordValidator();
+
+schema
+  .is()
+  .min(6) // Minimum length 6
+  .is()
+  .max(30) // Maximum length 30
+  .has()
+  .lowercase() // Must have lowercase letters
+  .has()
+  .digits(1) // Must have at least 1 digits
+  .has()
+  .not()
+  .spaces() // Should not have spaces
+  .is()
+  .not()
+  .oneOf(["Passw0rd", "Password123"]); // Blacklist these values
 
 ///////////////////////////////
 // SIGNUP
 ///////////////////////////////
 exports.signup = (req, res, next) => {
+  if (
+    !validator.isEmail(req.body.email) ||
+    !schema.validate(req.body.password)
+  ) {
+    res.status(401).json({
+      message: "L'email et/ou le mot de passe ne sont pas valides !",
+    });
+  }
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -116,4 +147,71 @@ exports.deleteUser = (req, res, next) => {
         error,
       })
     );
+};
+
+///////////////////////////////
+// PUT
+///////////////////////////////
+exports.modifyUser = (req, res, next) => {
+  UserModel.findOne({
+    where: { id: req.params.id },
+  }).then((user) => {
+    if (user.id === req.token.userId || req.token.isAdmin === true) {
+      if (req.body.firstName == "" || req.body.lastName == "") {
+        return res.status(400).json({
+          message: "Ces champs ne peuvent pas être vides",
+        });
+      }
+      UserModel.update(
+        { firstName: req.body.firstName, lastName: req.body.lastName },
+        { where: { id: req.params.id } }
+      )
+        .then(() =>
+          res.status(200).json({
+            message: "Informations modifiées !",
+          })
+        )
+        .catch((error) =>
+          res.status(400).json({
+            error,
+          })
+        );
+    } else {
+      res.status(403).json({
+        message: "403: unauthorized request !",
+      });
+    }
+  });
+};
+
+///////////////////////////////
+// GET ALL
+///////////////////////////////
+exports.getAllUsers = (req, res, next) => {
+  UserModel.findAll()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error,
+      });
+    });
+};
+
+///////////////////////////////
+// GET BY ID
+///////////////////////////////
+exports.getOneUser = (req, res, next) => {
+  UserModel.findOne({
+    where: { id: req.params.id },
+  })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
 };
