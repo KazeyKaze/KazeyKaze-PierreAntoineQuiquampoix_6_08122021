@@ -63,3 +63,70 @@ exports.modifyComment = (req, res, next) => {
     }
   });
 };
+
+///////////////////////////////
+// DELETE
+///////////////////////////////
+exports.deleteComment = (req, res, next) => {
+  CommentModel.findOne({
+    where: { id: req.params.id },
+  })
+    .then((comment) => {
+      if (comment.UserId === req.token.userId || req.token.isAdmin === true) {
+        CommentModel.destroy({
+          where: { id: req.params.id },
+        })
+          .then(() =>
+            res.status(200).json({
+              message: "Commentaire supprimé !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
+      } else {
+        res.status(403).json({
+          message: "403: unauthorized request !",
+        });
+      }
+    })
+    .catch((error) =>
+      res.status(500).json({
+        error,
+      })
+    );
+};
+
+///////////////////////////////
+// GET ALL
+///////////////////////////////
+exports.getAllComments = (req, res, next) => {
+  CommentModel.findAll()
+    .then((comments) => {
+      res.status(200).json(comments);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error,
+      });
+    });
+};
+
+///////////////////////////////
+// GET BY ID
+///////////////////////////////
+exports.getOneComment = (req, res, next) => {
+  CommentModel.findOne({
+    where: { id: req.params.id },
+  })
+    .then((comment) => {
+      res.status(200).json(comment);
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+};
