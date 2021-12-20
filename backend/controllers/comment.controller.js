@@ -32,23 +32,23 @@ exports.createComment = (req, res, next) => {
 ///////////////////////////////
 // PUT
 ///////////////////////////////
-exports.modifyPost = (req, res, next) => {
-  PostModel.findOne({
+exports.modifyComment = (req, res, next) => {
+  CommentModel.findOne({
     where: { id: req.params.id },
-  }).then((post) => {
-    if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-      if (!req.file && req.body.text == "") {
+  }).then((comment) => {
+    if (comment.UserId === req.token.userId || req.token.isAdmin === true) {
+      if (req.body.text == "") {
         return res
           .status(400)
-          .json({ message: "Votre post ne peut pas être vide." });
+          .json({ message: "Votre commentaire ne peut pas être vide." });
       }
-      PostModel.update(
+      CommentModel.update(
         { text: req.body.text },
         { where: { id: req.params.id } }
       )
         .then(() =>
           res.status(200).json({
-            message: "Post modifié !",
+            message: "Commentaire modifié !",
           })
         )
         .catch((error) =>
