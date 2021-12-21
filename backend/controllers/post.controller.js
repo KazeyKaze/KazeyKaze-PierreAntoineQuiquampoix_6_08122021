@@ -13,7 +13,9 @@ exports.createPost = (req, res, next) => {
     const post = new PostModel({
       UserId: req.token.userId,
       text: req.body.text,
-      image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      image: req.file
+        ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+        : null,
     });
     post
       .save()
@@ -46,9 +48,9 @@ exports.modifyPost = (req, res, next) => {
       PostModel.update(
         {
           text: req.body.text,
-          image: `${req.protocol}://${req.get("host")}/images/${
-            req.file.filename
-          }`,
+          image: req.file
+            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+            : null,
         },
         { where: { id: req.params.id } }
       )
