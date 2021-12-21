@@ -2,7 +2,7 @@ const PostModel = require("../models/post.model");
 const fs = require("fs");
 
 ///////////////////////////////
-// POST (rajouter les images)
+// POST
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
   if (!req.file && req.body.text == "") {
@@ -13,6 +13,7 @@ exports.createPost = (req, res, next) => {
     const post = new PostModel({
       UserId: req.token.userId,
       text: req.body.text,
+      image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     });
     post
       .save()
@@ -30,7 +31,7 @@ exports.createPost = (req, res, next) => {
 };
 
 ///////////////////////////////
-// PUT (rajouter les images)
+// PUT
 ///////////////////////////////
 exports.modifyPost = (req, res, next) => {
   PostModel.findOne({
@@ -43,7 +44,12 @@ exports.modifyPost = (req, res, next) => {
           .json({ message: "Votre post ne peut pas être vide." });
       }
       PostModel.update(
-        { text: req.body.text },
+        {
+          text: req.body.text,
+          image: `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`,
+        },
         { where: { id: req.params.id } }
       )
         .then(() =>
@@ -65,7 +71,7 @@ exports.modifyPost = (req, res, next) => {
 };
 
 ///////////////////////////////
-// DELETE (rajouter les images)
+// DELETE
 ///////////////////////////////
 exports.deletePost = (req, res, next) => {
   PostModel.findOne({
@@ -73,19 +79,22 @@ exports.deletePost = (req, res, next) => {
   })
     .then((post) => {
       if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-        PostModel.destroy({
-          where: { id: req.params.id },
-        })
-          .then(() =>
-            res.status(200).json({
-              message: "Post supprimé !",
-            })
-          )
-          .catch((error) =>
-            res.status(400).json({
-              error,
-            })
-          );
+        const filename = post.image.split("/images/")[1];
+        fs.unlink(`images/${filename}`, () => {
+          PostModel.destroy({
+            where: { id: req.params.id },
+          })
+            .then(() =>
+              res.status(200).json({
+                message: "Post supprimé !",
+              })
+            )
+            .catch((error) =>
+              res.status(400).json({
+                error,
+              })
+            );
+        });
       } else {
         res.status(403).json({
           message: "403: unauthorized request !",
