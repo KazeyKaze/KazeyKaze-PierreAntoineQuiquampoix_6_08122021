@@ -1,4 +1,10 @@
 .g-banner {
-    width: 100%;
-    max-width: 400px;
+  width: 90%;
+  max-width: 400px;
+  padding: 1rem 0 1.5rem 0;
+  border-bottom: 2px solid black;
+}
+
+.g-div-app {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

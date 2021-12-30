@@ -1,0 +1,42 @@
+.g-div-connect {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.g-div-login,
+.g-div-signup {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0rem 1rem 0rem;
+  padding-bottom: 2rem;
+  border-radius: 40px;
+  width: 35%;
+  min-width: 300px;
+  background-color: rgba(178, 247, 236, 0.4);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+}
+
+h2 {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 1.5rem 0 1.5rem 0;
+  padding-bottom: 0.5rem;
+  font-size: 26px;
+  border-bottom: 2px solid black;
+
+}
+
+label {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+input {
+  margin-bottom: 0.3rem;
+  width: 230px;
+  height: 25px;
+  font-size: 16px;
+}
