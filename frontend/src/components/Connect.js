@@ -10,14 +10,14 @@ function Connect() {
             <div>
               <h2>Connexion</h2>
             </div>
-            <label for="email">
+            <label htmlFor="email">
               Email:
               <br />
             </label>
             <input type="email" id="login-email" name="user_email" />
           </div>
           <div>
-            <label for="password">
+            <label htmlFor="password">
               Mot de passe:
               <br />
             </label>
@@ -33,28 +33,28 @@ function Connect() {
             <div>
               <h2>Inscription</h2>
             </div>
-            <label for="email">
+            <label htmlFor="email">
               Email:
               <br />
             </label>
             <input type="email" id="signup-email" name="user_email" />
           </div>
           <div>
-            <label for="password">
+            <label htmlFor="password">
               Mot de passe:
               <br />
             </label>
             <input type="text" id="signup-password" name="user_password" />
           </div>
           <div>
-            <label for="firstname">
+            <label htmlFor="firstname">
               Prénom:
               <br />
             </label>
             <input type="text" id="signup-firstname" name="user_firstname" />
           </div>
           <div>
-            <label for="lastname">
+            <label htmlFor="lastname">
               Nom:
               <br />
             </label>
