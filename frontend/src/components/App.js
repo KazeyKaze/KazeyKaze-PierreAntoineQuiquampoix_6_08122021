@@ -6,10 +6,15 @@ import "../styles/App.css";
 function App() {
   return (
     <div className="g-div-app">
-      <Banner>
-        <img src={logo} className="g-banner" alt="Logo Groupomania" />
-      </Banner>
-      <Connect />
+      <header>
+        <Banner>
+          <img src={logo} className="g-banner" alt="Logo Groupomania" />
+        </Banner>
+      </header>
+      <div>
+        <Connect />
+      </div>
+      <footer></footer>
     </div>
   );
 }
