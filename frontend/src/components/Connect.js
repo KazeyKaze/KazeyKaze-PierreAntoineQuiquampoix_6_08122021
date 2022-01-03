@@ -7,8 +7,8 @@ function Connect() {
       <div className="g-div-login">
         <form action="http://localhost:3000/api/auth/login" method="post">
           <div>
-            <div>
-              <h2>Connexion</h2>
+            <div className="g-div-h2">
+              <h2 >Connexion</h2>
             </div>
             <label htmlFor="email">
               Email:
@@ -24,13 +24,14 @@ function Connect() {
             <input type="text" id="login-password" name="user_password" />
           </div>
         </form>
+        <button>Connexion</button>
       </div>
 
       {/* SIGNUP */}
       <div className="g-div-signup">
         <form action="http://localhost:3000/api/auth/signup" method="post">
           <div>
-            <div>
+            <div className="g-div-h2">
               <h2>Inscription</h2>
             </div>
             <label htmlFor="email">
@@ -61,6 +62,7 @@ function Connect() {
             <input type="text" id="signup-lastname" name="user_lastname" />
           </div>
         </form>
+        <button>Inscription</button>
       </div>
     </div>
   );
