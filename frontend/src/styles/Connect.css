@@ -41,6 +41,12 @@ input {
   width: 230px;
   height: 25px;
   font-size: 16px;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none !important;
+  border: 3px solid rgba(236, 121, 54, 0.25);;
 }
 
 button {
