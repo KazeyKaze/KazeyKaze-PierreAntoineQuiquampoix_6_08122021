@@ -4,6 +4,7 @@ import React, { useState } from "react";
 //////////////////////////////////////////////////
 // - Récupérer le token
 // - Placer le token dans le session storage
+// - "Authorization": `Bearer ${window.sessionStorage.getItem("token")}`
 //////////////////////////////////////////////////
 
 ////////// LOGIQUE
@@ -24,7 +25,13 @@ const Login = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return sessionStorage.setItem("token", JSON.stringify(data.token));
+      });
   }
 
   /* FONCTION REGISTER */
