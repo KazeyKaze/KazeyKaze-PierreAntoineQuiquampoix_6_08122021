@@ -2,7 +2,6 @@ import "../styles/Login.css";
 import React, { useState } from "react";
 
 //////////////////////////////////////////////////
-// - Rendre fonctionnelle l'inscription
 // - Récupérer le token
 // - Placer le token dans le session storage
 //////////////////////////////////////////////////
