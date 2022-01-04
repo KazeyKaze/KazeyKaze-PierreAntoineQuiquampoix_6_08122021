@@ -1,6 +1,6 @@
 import Header from "./Header";
 import logo_header from "../assets/icon-left-font-monochrome-black.png";
-import Connect from "../components/Connect";
+import Login from "./Login";
 import Footer from "../components/Footer";
 import "../styles/App.css";
 
@@ -13,7 +13,7 @@ function App() {
         </Header>
       </header>
       <div>
-        <Connect />
+        <Login />
       </div>
       <footer>
         <Footer />
