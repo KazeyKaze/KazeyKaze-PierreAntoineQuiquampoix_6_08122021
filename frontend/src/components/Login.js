@@ -8,17 +8,41 @@ import React, { useState } from "react";
 //////////////////////////////////////////////////
 
 ////////// LOGIQUE
+
+/* FONCTION LOGIN */
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailLogin, setEmailLogin] = useState("");
+  const [passwordLogin, setPasswordLogin] = useState("");
 
   function connect(e) {
     e.preventDefault();
     fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email: emailLogin,
+        password: passwordLogin,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  /* FONCTION REGISTER */
+  const [emailSignup, setEmailSignup] = useState("");
+  const [passwordSignup, setPasswordSignup] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+
+  function register(e) {
+    e.preventDefault();
+    fetch("http://localhost:3000/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailSignup,
+        password: passwordSignup,
+        firstName: firstname,
+        lastName: lastname,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +59,6 @@ const Login = () => {
           <div>
             <div className="g-div-h2">
               <h2>Connexion</h2>
-              <p>{email}</p>
             </div>
             <label htmlFor="email">
               Email:
@@ -45,8 +68,8 @@ const Login = () => {
               type="email"
               id="login-email"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={emailLogin}
+              onChange={(e) => setEmailLogin(e.target.value)}
               required
             />
           </div>
@@ -59,12 +82,12 @@ const Login = () => {
               type="password"
               id="login-password"
               placeholder="Mot de passe"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={passwordLogin}
+              onChange={(e) => setPasswordLogin(e.target.value)}
               required
             />
           </div>
-          <div className="button-connect">
+          <div className="button-form">
             <button type="submit">Connexion</button>
           </div>
         </form>
@@ -72,7 +95,7 @@ const Login = () => {
 
       {/* SIGNUP */}
       <div className="g-div-signup">
-        <form action="">
+        <form action="" onSubmit={register}>
           <div>
             <div className="g-div-h2">
               <h2>Inscription</h2>
@@ -81,7 +104,14 @@ const Login = () => {
               Email:
               <br />
             </label>
-            <input type="email" id="signup-email" placeholder="Email" />
+            <input
+              type="email"
+              id="signup-email"
+              placeholder="Email"
+              value={emailSignup}
+              onChange={(e) => setEmailSignup(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label htmlFor="password">
@@ -92,6 +122,9 @@ const Login = () => {
               type="password"
               id="signup-password"
               placeholder="Mot de passe"
+              value={passwordSignup}
+              onChange={(e) => setPasswordSignup(e.target.value)}
+              required
             />
           </div>
           <div>
@@ -103,6 +136,9 @@ const Login = () => {
               type="firstname"
               id="signup-firstname"
               placeholder="Prénom"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+              required
             />
           </div>
           <div>
@@ -110,10 +146,19 @@ const Login = () => {
               Nom:
               <br />
             </label>
-            <input type="lastname" id="signup-lastname" placeholder="Nom" />
+            <input
+              type="lastname"
+              id="signup-lastname"
+              placeholder="Nom"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
+              required
+            />
+          </div>
+          <div className="button-form">
+            <button type="submit">Inscription</button>
           </div>
         </form>
-        <button>Inscription</button>
       </div>
     </div>
   );
