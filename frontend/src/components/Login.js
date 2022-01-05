@@ -2,8 +2,6 @@ import "../styles/Login.css";
 import React, { useState } from "react";
 
 //////////////////////////////////////////////////
-// - Récupérer le token
-// - Placer le token dans le session storage
 // - "Authorization": `Bearer ${window.sessionStorage.getItem("token")}`
 //////////////////////////////////////////////////
 
@@ -59,6 +57,9 @@ const Login = () => {
   ////////// STRUCTURE
   return (
     <div className="g-div-connect">
+      <div className="g-div-h1">
+        <h1>Choississez de vous connecter ou de vous inscrire</h1>
+      </div>
       {/* LOGIN */}
       <div className="g-div-login">
         <form action="" onSubmit={connect}>

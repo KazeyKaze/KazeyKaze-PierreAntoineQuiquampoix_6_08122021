@@ -4,6 +4,19 @@
   flex-wrap: wrap;
 }
 
+.g-div-h1 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex: 1 1 100%;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+}
+
 .g-div-login,
 .g-div-signup {
   display: flex;
@@ -12,7 +25,7 @@
   border-radius: 40px;
   width: 35%;
   min-width: 300px;
-  background-color: rgba(178, 247, 236, 0.4);
+  background-color: rgba(178, 247, 236, 0.55);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
   flex-direction: column;
   align-items: center;
@@ -43,20 +56,23 @@ input {
   border-radius: 5px;
 }
 
-input {
+input:focus {
   outline: none !important;
   border: 3px solid rgba(236, 121, 54, 0.25);
   text-align: center;
 }
 
 input::placeholder {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgba(0, 0, 0, 0.38);
   text-align: center;
   font-style: italic;
+  letter-spacing: .05rem;
 }
 
 button {
   background-color: rgba(0, 0, 0, 0.87);
-  color: rgba(236, 122, 46, 0.82);
+  color: rgba(236, 122, 46);
   font-size: 18px;
   margin: 1.5rem 0 0 0;
   font-weight: bold;
