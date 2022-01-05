@@ -1,7 +1,9 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import logo_header from "../assets/icon-left-font-monochrome-black.png";
-import Login from "./Login";
 import Footer from "../components/Footer";
+import Login from "./Login";
+import Wall from "./Wall";
 import "../styles/App.css";
 
 function App() {
@@ -13,7 +15,12 @@ function App() {
         </Header>
       </header>
       <div>
-        <Login />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/wall" element={<Wall />} />
+          </Routes>
+        </Router>
       </div>
       <footer>
         <Footer />

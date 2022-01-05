@@ -1,9 +1,5 @@
-import "../styles/Login.css";
 import React, { useState } from "react";
-
-//////////////////////////////////////////////////
-// - "Authorization": `Bearer ${window.sessionStorage.getItem("token")}`
-//////////////////////////////////////////////////
+import "../styles/Login.css";
 
 ////////// LOGIQUE
 
@@ -28,8 +24,16 @@ const Login = () => {
         return res.json();
       })
       .then((data) => {
-        return sessionStorage.setItem("token", JSON.stringify(data.token));
-      });
+        sessionStorage.setItem("token", JSON.stringify(data.token));
+        const token = data.token;
+        console.log(token);
+        if (token !== null && token !== undefined) {
+          window.location.href = "http://localhost:4000/wall";
+        } else {
+          alert("Utilisateur non trouvé ou mot de passe incorrect");
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
   }
 
   /* FONCTION REGISTER */
@@ -51,7 +55,17 @@ const Login = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          alert(
+            "Votre compte a bien été crée, veuillez à présent vous connecter."
+          );
+        } else {
+          alert("Une erreur est surevenue, veuillez réessayer");
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
   }
 
   ////////// STRUCTURE
