@@ -44,16 +44,17 @@ function Wall() {
   return (
     <div>
       <h1>Voici les derniers posts :</h1>
-      <ul>
-        {posts.map((item) => (
-          <li key={item.id}>
-            {item.text}
-            {item.User.firstName}
-            {item.User.lastName}
+      {posts.map((item) => (
+        <ul key={item.id}>
+          <li>
+            {item.User.firstName} {item.User.lastName} {item.createdAt}
+          </li>
+          <li>{item.text}</li>
+          <li>
             <img src={item.image} alt={item.image}></img>{" "}
           </li>
-        ))}
-      </ul>
+        </ul>
+      ))}
     </div>
   );
 }
