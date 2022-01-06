@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "../styles/Wall.css";
+const moment = require("moment");
+require("moment/min/locales.min");
+moment.locale("fr");
 
 ////////// LOGIQUE
 
@@ -45,15 +48,18 @@ function Wall() {
     <div>
       <h1>Voici les derniers posts :</h1>
       {posts.map((item) => (
-        <ul key={item.id}>
-          <li>
-            {item.User.firstName} {item.User.lastName} {item.createdAt}
-          </li>
-          <li>{item.text}</li>
-          <li>
-            <img src={item.image} alt={item.image}></img>{" "}
-          </li>
-        </ul>
+        <div key={item.id}>
+          <div>
+            <div>
+              {item.User.firstName} {item.User.lastName}
+            </div>
+            <div>le {moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
+          </div>
+          <div>{item.text}</div>
+          <div>
+            <img src={item.image} alt={item.image}></img>
+          </div>
+        </div>
       ))}
     </div>
   );

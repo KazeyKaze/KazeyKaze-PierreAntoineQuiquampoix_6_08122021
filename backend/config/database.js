@@ -11,6 +11,7 @@ const db = new Sequelize(
     logging: false,
     dialect: "mysql",
     host: "localhost",
+    timezone: "+01:00",
 
     pool: {
       max: 5,
