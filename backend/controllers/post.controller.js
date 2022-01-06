@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const fs = require("fs");
@@ -117,6 +118,7 @@ exports.deletePost = (req, res, next) => {
 ///////////////////////////////
 exports.getAllPosts = (req, res, next) => {
   PostModel.findAll({
+    order: [["createdAt", "DESC"]],
     include: [
       {
         model: UserModel,
