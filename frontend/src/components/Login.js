@@ -8,6 +8,7 @@ const Login = () => {
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
 
+  // Envoie des données à l'API pour la connexion
   function connect(e) {
     e.preventDefault();
     fetch("http://localhost:3000/api/auth/login", {
@@ -23,11 +24,11 @@ const Login = () => {
       .then((res) => {
         return res.json();
       })
+      // Si un token a été renvoyé, alors, redirection vers la page mur
       .then((data) => {
         sessionStorage.setItem("token", JSON.stringify(data.token));
         const token = data.token;
-        console.log(token);
-        if (token !== null && token !== undefined) {
+        if (token !== null || token !== undefined) {
           window.location.href = "http://localhost:4000/wall";
         } else {
           alert("Utilisateur non trouvé ou mot de passe incorrect");
@@ -42,6 +43,7 @@ const Login = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
+  // Envoie des données à l'API pour l'inscription
   function register(e) {
     e.preventDefault();
     fetch("http://localhost:3000/api/auth/signup", {
@@ -56,6 +58,7 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     })
+      // Si la réponse est 201 alors l'utilisateur peut se connecter
       .then((res) => {
         if (res.status === 201) {
           alert(
