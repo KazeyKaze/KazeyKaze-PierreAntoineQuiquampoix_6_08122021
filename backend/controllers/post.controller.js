@@ -1,5 +1,7 @@
 const PostModel = require("../models/post.model");
+const UserModel = require("../models/user.model");
 const fs = require("fs");
+const { where } = require("sequelize/dist");
 
 ///////////////////////////////
 // POST
@@ -114,7 +116,14 @@ exports.deletePost = (req, res, next) => {
 // GET ALL
 ///////////////////////////////
 exports.getAllPosts = (req, res, next) => {
-  PostModel.findAll()
+  PostModel.findAll({
+    include: [
+      {
+        model: UserModel,
+        attributes: ["firstName", "lastName"],
+      },
+    ],
+  })
     .then((posts) => {
       res.status(200).json(posts);
     })

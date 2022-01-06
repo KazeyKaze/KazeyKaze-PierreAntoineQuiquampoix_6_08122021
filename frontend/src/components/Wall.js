@@ -48,6 +48,8 @@ function Wall() {
         {posts.map((item) => (
           <li key={item.id}>
             {item.text}
+            {item.User.firstName}
+            {item.User.lastName}
             <img src={item.image} alt={item.image}></img>{" "}
           </li>
         ))}

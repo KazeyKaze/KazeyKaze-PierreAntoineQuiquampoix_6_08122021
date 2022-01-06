@@ -1,4 +1,6 @@
 const CommentModel = require("../models/comment.model");
+const UserModel = require("../models/user.model");
+const { where } = require("sequelize/dist");
 
 ///////////////////////////////
 // POST
@@ -103,9 +105,16 @@ exports.deleteComment = (req, res, next) => {
 // GET ALL
 ///////////////////////////////
 exports.getAllComments = (req, res, next) => {
-  CommentModel.findAll()
-    .then((comments) => {
-      res.status(200).json(comments);
+  CommentModel.findAll({
+    include: [
+      {
+        model: UserModel,
+        attributes: ["firstName", "lastName"],
+      },
+    ],
+  })
+    .then((posts) => {
+      res.status(200).json(posts);
     })
     .catch((error) => {
       res.status(400).json({
