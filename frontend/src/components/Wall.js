@@ -46,16 +46,18 @@ function Wall() {
   ////////// STRUCTURE
   return (
     <div className="g-div-allWall">
+      {/* Mapping des posts */}
       {posts.map((item) => (
         <div key={item.id} className="g-div-wall">
-          <h3>Post</h3>
+          <h3>Post #{item.id}</h3>
+
           {/* Posts */}
           <div className="g-div-wall-posts">
             <div className="g-div-wall-posts-header">
               <div className="g-div-wall-posts-header-last">
                 {item.User.firstName} {item.User.lastName}
               </div>
-              <div>{moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
+              <div className="g-div-wall-posts-header-date">{moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
             </div>
             <div className="g-div-wall-posts-text">{item.text}</div>
             <div className="g-div-wall-posts-img">
@@ -64,22 +66,23 @@ function Wall() {
           </div>
 
           {/* Comments */}
-          <h3>Commentaires</h3>
-          <div className="g-div-wall-comments">
-            <div className="g-div-wall-comments-header">
-              <div className="g-div-wall-comments-header-last">
-                {item.Comments[0].User.firstName}{" "}
-                {item.Comments[0].User.lastName}
+          <h4>Commentaires ({item.Comments.length})</h4>
+          
+          {/* Mapping des comments */}
+          {item.Comments.map((comment) => (
+            <div key={comment.id} className="g-div-wall-comments">
+              <div className="g-div-wall-comments-header">
+                <div className="g-div-wall-comments-header-last">
+                  {item.Comments[0].User.firstName}{" "}
+                  {item.Comments[0].User.lastName}
+                </div>
+                <div className="g-div-wall-comments-header-date">
+                  {moment(comment.createdAt).format("Do/M/YYYY à HH:mm")}
+                </div>
               </div>
-              <div>
-                {moment(item.Comments[0].createdAt).format("Do/M/YYYY à HH:mm")}
-              </div>
+              <div className="g-div-wall-comments-text">{comment.text}</div>
             </div>
-
-            <div className="g-div-wall-comments-text">
-              {item.Comments[0].text}
-            </div>
-          </div>
+          ))}
         </div>
       ))}
     </div>
