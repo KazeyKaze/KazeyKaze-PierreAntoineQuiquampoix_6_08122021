@@ -57,7 +57,9 @@ function Wall() {
               <div className="g-div-wall-posts-header-last">
                 {item.User.firstName} {item.User.lastName}
               </div>
-              <div className="g-div-wall-posts-header-date">{moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
+              <div className="g-div-wall-posts-header-date">
+                {moment(item.createdAt).format("Do/M/YYYY à HH:mm")}
+              </div>
             </div>
             <div className="g-div-wall-posts-text">{item.text}</div>
             <div className="g-div-wall-posts-img">
@@ -67,7 +69,7 @@ function Wall() {
 
           {/* Comments */}
           <h4>Commentaires ({item.Comments.length})</h4>
-          
+
           {/* Mapping des comments */}
           {item.Comments.map((comment) => (
             <div key={comment.id} className="g-div-wall-comments">
