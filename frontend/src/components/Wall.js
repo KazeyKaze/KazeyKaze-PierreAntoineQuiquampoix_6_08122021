@@ -45,19 +45,40 @@ function Wall() {
 
   ////////// STRUCTURE
   return (
-    <div>
-      <h1>Voici les derniers posts :</h1>
+    <div className="g-div-allWall">
       {posts.map((item) => (
-        <div key={item.id}>
-          <div>
-            <div>
-              {item.User.firstName} {item.User.lastName}
+        <div key={item.id} className="g-div-wall">
+          <h3>Post</h3>
+          {/* Posts */}
+          <div className="g-div-wall-posts">
+            <div className="g-div-wall-posts-header">
+              <div className="g-div-wall-posts-header-last">
+                {item.User.firstName} {item.User.lastName}
+              </div>
+              <div>{moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
             </div>
-            <div>le {moment(item.createdAt).format("Do/M/YYYY à HH:mm")}</div>
+            <div className="g-div-wall-posts-text">{item.text}</div>
+            <div className="g-div-wall-posts-img">
+              <img src={item.image} alt={item.image}></img>
+            </div>
           </div>
-          <div>{item.text}</div>
-          <div>
-            <img src={item.image} alt={item.image}></img>
+
+          {/* Comments */}
+          <h3>Commentaires</h3>
+          <div className="g-div-wall-comments">
+            <div className="g-div-wall-comments-header">
+              <div className="g-div-wall-comments-header-last">
+                {item.Comments[0].User.firstName}{" "}
+                {item.Comments[0].User.lastName}
+              </div>
+              <div>
+                {moment(item.Comments[0].createdAt).format("Do/M/YYYY à HH:mm")}
+              </div>
+            </div>
+
+            <div className="g-div-wall-comments-text">
+              {item.Comments[0].text}
+            </div>
           </div>
         </div>
       ))}

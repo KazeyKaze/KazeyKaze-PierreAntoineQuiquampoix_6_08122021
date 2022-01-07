@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
+const CommentModel = require("../models/comment.model");
 const fs = require("fs");
 const { where } = require("sequelize/dist");
 
@@ -123,6 +124,15 @@ exports.getAllPosts = (req, res, next) => {
       {
         model: UserModel,
         attributes: ["firstName", "lastName"],
+      },
+      {
+        model: CommentModel,
+        include: [
+          {
+            model: UserModel,
+            attributes: ["firstName", "lastName"],
+          },
+        ],
       },
     ],
   })
