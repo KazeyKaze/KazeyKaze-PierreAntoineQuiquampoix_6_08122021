@@ -3,6 +3,7 @@ import Header from "./Header";
 import logo_header from "../assets/icon-left-font-monochrome-black.png";
 import Footer from "../components/Footer";
 import Login from "./Login";
+import Buttons from "./Buttons";
 import Wall from "./Wall";
 import "../styles/App.css";
 
@@ -18,7 +19,16 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/wall" element={<Wall />} />
+            <Route
+              exact
+              path="/wall"
+              element={
+                <>
+                  <Buttons />
+                  <Wall />
+                </>
+              }
+            />
           </Routes>
         </Router>
       </div>
