@@ -27,6 +27,7 @@ const Login = () => {
       // Si un token a été renvoyé, alors, redirection vers la page mur
       .then((data) => {
         sessionStorage.setItem("token", JSON.stringify(data.token));
+        sessionStorage.setItem("userId", JSON.stringify(data.userId));
         const token = data.token;
         if (token !== null || token !== undefined) {
           window.location.href = "http://localhost:4000/wall";

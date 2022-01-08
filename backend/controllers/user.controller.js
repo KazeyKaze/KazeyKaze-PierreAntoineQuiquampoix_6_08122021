@@ -98,7 +98,7 @@ exports.login = (req, res, next) => {
               {
                 expiresIn: "24h",
               }
-            ),
+            ), userId: user.id,
           });
         })
         .catch((error) =>
