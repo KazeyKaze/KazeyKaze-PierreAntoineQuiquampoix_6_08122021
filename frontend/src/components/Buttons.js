@@ -39,7 +39,7 @@ function Buttons() {
     <div className="g-div-buttons">
       {" "}
       <button className="button-disconect" onClick={disconnect}>
-        Déconnexion du compte
+        Déconnecter mon compte
       </button>
       <button className="button-delete" onClick={deleteUser}>
         Supprimer mon compte
