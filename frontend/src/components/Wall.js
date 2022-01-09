@@ -6,6 +6,7 @@ moment.locale("fr");
 
 ////////// LOGIQUE
 
+/* FONCTION WALL */
 function Wall() {
   // Fonction qui vérifie le token en cas de manipulation de l'URL sans token
   function verifyToken() {

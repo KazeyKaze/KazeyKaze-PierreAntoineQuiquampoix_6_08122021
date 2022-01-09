@@ -1,13 +1,15 @@
 .g-div-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    margin: -1.5rem 0 3rem 0;
-    flex-wrap: wrap;
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
+  display: flex;
+  justify-content: space-evenly;
+  margin: -1.5rem 0 3rem 0;
+  flex-wrap: wrap;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 800px;
 }
 
-.button-disconect, .button-deletebutton-delete {
-    display: flex;
+.button-disconect,
+.button-deletebutton-delete {
+  display: flex;
 }

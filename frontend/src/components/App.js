@@ -4,6 +4,7 @@ import logo_header from "../assets/icon-left-font-monochrome-black.png";
 import Footer from "../components/Footer";
 import Login from "./Login";
 import Buttons from "./Buttons";
+import CreatePost from "./CreatePost";
 import Wall from "./Wall";
 import "../styles/App.css";
 
@@ -25,6 +26,7 @@ function App() {
               element={
                 <>
                   <Buttons />
+                  <CreatePost />
                   <Wall />
                 </>
               }

@@ -106,7 +106,6 @@ exports.deleteComment = (req, res, next) => {
 ///////////////////////////////
 exports.getAllComments = (req, res, next) => {
   CommentModel.findAll({
-    order: [["createdAt", "DESC"]],
     include: [
       {
         model: UserModel,

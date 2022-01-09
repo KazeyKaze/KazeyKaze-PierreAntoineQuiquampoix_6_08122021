@@ -9,7 +9,7 @@ const { where } = require("sequelize/dist");
 // POST
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
-  if (!req.file && req.body.text == "") {
+  if (!req.body.file && !req.body.text) {
     return res
       .status(400)
       .json({ message: "Votre post ne peut pas être vide." });
