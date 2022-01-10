@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/Wall.css";
 const moment = require("moment");
 require("moment/min/locales.min");
@@ -60,7 +60,34 @@ function Wall() {
         }
       })
       .catch((error) => alert("Erreur : " + error));
-    console.log(postId);
+  }
+
+  // Fonction qui modifie un post
+  const [text, setText] = useState("");
+  const [img, setImg] = useState(null);
+  const inputRef = useRef();
+  let formData = new FormData();
+  formData.append("text", text);
+  formData.append("image", img);
+  
+  function modifyPost(postId) {
+    fetch(`http://localhost:3000/api/posts/${postId}`, {
+      method: "PUT",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert(
+            "Vous n'avez pas les droits pour modifier ce post ou le post est vide."
+          );
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
   }
 
   ////////// STRUCTURE
@@ -91,7 +118,39 @@ function Wall() {
               >
                 Supprimer
               </button>
-              <button className="g-button-modify-post">Modifier</button>
+              <button
+                className="g-button-modify-post"
+                onClick={function preventDefault(e) {
+                  e.preventDefault();
+                  modifyPost(item.id);
+                }}
+              >
+                Modifier
+              </button>
+            </div>
+            <div>
+
+              {/* ///////////////////////////////////////////////////// */}
+              <div>
+                <form action="">
+                  <textarea
+                    id="text-createPost"
+                    rows="2"
+                    placeholder="Modifiez votre message et/ou choisissez un fichier"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    required
+                  ></textarea>
+                  <input
+                    type="file"
+                    id="img-createPost"
+                    onChange={() => setImg(inputRef.current.files[0])}
+                    ref={inputRef}
+                  ></input>
+                </form>
+              </div>
+              {/* ///////////////////////////////////////////////////// */}
+              
             </div>
             <div className="g-div-wall-posts-text">{item.text}</div>
             <div className="g-div-wall-posts-img">

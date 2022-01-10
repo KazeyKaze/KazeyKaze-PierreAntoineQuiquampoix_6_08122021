@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header";
-import logo_header from "../assets/icon-left-font-monochrome-black.png";
 import Footer from "../components/Footer";
 import Login from "./Login";
 import Buttons from "./Buttons";
@@ -12,9 +11,7 @@ function App() {
   return (
     <div className="g-div-app">
       <header>
-        <Header>
-          <img src={logo_header} className="g-header" alt="Logo Groupomania" />
-        </Header>
+        <Header />
       </header>
       <div>
         <Router>
