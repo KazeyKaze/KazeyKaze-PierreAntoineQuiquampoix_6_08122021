@@ -38,25 +38,27 @@ function CreatePost() {
   return (
     <div className="g-div-createPost">
       <h3>Création de post</h3>
-      <textarea
-        id="text-createPost"
-        rows="5"
-        placeholder="Editez le contenu de votre post ici et choisissez, si vous le souhaitez, une image ci-dessous..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        required
-      ></textarea>
-      <input
-        type="file"
-        id="img-createPost"
-        onChange={() => setImg(inputRef.current.files[0])}
-        ref={inputRef}
-      ></input>
-      <label htmlFor="createPost">
-        <button className="button-createPost" onClick={fetchPost}>
-          Poster
-        </button>
-      </label>
+      <form action="">
+        <textarea
+          id="text-createPost"
+          rows="5"
+          placeholder="Editez le contenu de votre post ici et choisissez, si vous le souhaitez, une image ci-dessous..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+        ></textarea>
+        <input
+          type="file"
+          id="img-createPost"
+          onChange={() => setImg(inputRef.current.files[0])}
+          ref={inputRef}
+        ></input>
+        <label htmlFor="createPost">
+          <button className="button-createPost" onClick={fetchPost}>
+            Poster
+          </button>
+        </label>
+      </form>
     </div>
   );
 }

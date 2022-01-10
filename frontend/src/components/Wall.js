@@ -62,6 +62,10 @@ function Wall() {
                 {moment(item.createdAt).format("Do/M/YYYY à HH:mm")}
               </div>
             </div>
+            <div className="g-div-wall-buttons">
+              <button className="g-button-delete-post">Supprimer</button>
+              <button className="g-button-modify-post">Modifier</button>
+            </div>
             <div className="g-div-wall-posts-text">{item.text}</div>
             <div className="g-div-wall-posts-img">
               <img src={item.image} alt={item.image}></img>
@@ -70,6 +74,17 @@ function Wall() {
 
           {/* Comments */}
           <h4>Commentaires ({item.Comments.length})</h4>
+          <div className="g-div-wall-comments-edit">
+            <form className="g-div-wall-comments-edit">
+              <textarea
+                className="g-button-modify-post"
+                id="text-createPost"
+                rows="2"
+                placeholder="Commentaire..."
+              ></textarea>
+              <button className="g-button-modify-comment">Commenter</button>
+            </form>
+          </div>
 
           {/* Mapping des comments */}
           {item.Comments.map((comment) => (
@@ -82,6 +97,10 @@ function Wall() {
                 <div className="g-div-wall-comments-header-date">
                   {moment(comment.createdAt).format("Do/M/YYYY à HH:mm")}
                 </div>
+              </div>
+              <div className="g-div-wall-buttons">
+                <button className="g-button-delete-comment">Supprimer</button>
+                <button className="g-button-modify-comment">Modifier</button>
               </div>
               <div className="g-div-wall-comments-text">{comment.text}</div>
             </div>

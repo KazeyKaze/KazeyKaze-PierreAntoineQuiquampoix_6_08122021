@@ -109,3 +109,25 @@ h4 {
   font-size: 0.9rem;
   margin-right: 0.3rem;
 }
+
+.g-div-wall-comments-edit {
+  display: flex;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.g-div-wall-buttons {
+  display: flex;
+  justify-content: left;
+}
+.g-button-delete-post,
+.g-button-modify-post,
+.g-button-delete-comment,
+.g-button-modify-comment {
+  margin: 5px 5px 0 3px;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
+}
