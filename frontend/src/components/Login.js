@@ -32,7 +32,7 @@ const Login = () => {
         if (token !== null || token !== undefined) {
           window.location.href = "http://localhost:4000/wall";
         } else {
-          alert("Utilisateur non trouvé ou mot de passe incorrect");
+          alert("Utilisateur non identifié ou mot de passe incorrect");
         }
       })
       .catch((error) => alert("Erreur : " + error));
@@ -66,7 +66,7 @@ const Login = () => {
             "Votre compte a bien été crée, veuillez à présent vous connecter."
           );
         } else {
-          alert("Une erreur est surevenue, veuillez réessayer");
+          alert("Une erreur est survenue, veuillez réessayer");
         }
       })
       .catch((error) => alert("Erreur : " + error));

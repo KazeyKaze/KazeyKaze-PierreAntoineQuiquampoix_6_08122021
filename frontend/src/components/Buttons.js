@@ -28,7 +28,7 @@ function Buttons() {
           );
           window.location.href = "http://localhost:4000/";
         } else {
-          alert("Une erreur est surevenue, veuillez réessayer");
+          alert("Une erreur est survenue, veuillez réessayer");
         }
       })
       .catch((error) => alert("Erreur : " + error));

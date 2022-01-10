@@ -13,7 +13,7 @@ function Wall() {
     const token = JSON.parse(sessionStorage.getItem("token"));
     if (token === null || token === undefined) {
       alert(
-        "Il y a eu une erreur concernant votre identification, vous allez être redirigé vers la page de connexion"
+        "Erreur d'identification, vous allez être redirigé vers la page de connexion"
       );
       window.location.href = "http://localhost:4000";
     }
@@ -33,7 +33,7 @@ function Wall() {
     return await res.json();
   }
 
-  // Fonction qui récupère les posts et les met dans un tableau ???
+  // Fonction qui récupère les posts et les met dans un tableau
   useEffect(() => {
     let mounted = true;
     allPosts().then((items) => {
@@ -43,6 +43,25 @@ function Wall() {
     });
     return () => (mounted = false);
   }, []);
+
+  // Fonction qui supprime un post
+  function deletePost(postId) {
+    fetch(`http://localhost:3000/api/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert("Vous n'avez pas les droits pour supprimer ce post.");
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
+    console.log(postId);
+  }
 
   ////////// STRUCTURE
   return (
@@ -63,7 +82,15 @@ function Wall() {
               </div>
             </div>
             <div className="g-div-wall-buttons">
-              <button className="g-button-delete-post">Supprimer</button>
+              <button
+                className="g-button-delete-post"
+                onClick={function preventDefault(e) {
+                  e.preventDefault();
+                  deletePost(item.id);
+                }}
+              >
+                Supprimer
+              </button>
               <button className="g-button-modify-post">Modifier</button>
             </div>
             <div className="g-div-wall-posts-text">{item.text}</div>

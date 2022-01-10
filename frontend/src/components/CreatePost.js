@@ -27,7 +27,7 @@ function CreatePost() {
           window.location.reload();
         } else {
           alert(
-            "Une erreur est surevenue ou votre post est vide, veuillez réessayer"
+            "Votre post est vide, veuillez réessayer"
           );
         }
       })
@@ -42,7 +42,7 @@ function CreatePost() {
         <textarea
           id="text-createPost"
           rows="5"
-          placeholder="Editez le contenu de votre post ici et choisissez, si vous le souhaitez, une image ci-dessous..."
+          placeholder="Editez votre message et/ou choisissez un fichier"
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
