@@ -69,7 +69,7 @@ function Wall() {
   let formData = new FormData();
   formData.append("text", text);
   formData.append("image", img);
-  
+
   function modifyPost(postId) {
     fetch(`http://localhost:3000/api/posts/${postId}`, {
       method: "PUT",
@@ -78,13 +78,36 @@ function Wall() {
         Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
       },
     })
-    .then((res) => {
-      if (res.status === 200) {
+      .then((res) => {
+        if (res.status === 200) {
           window.location.reload();
         } else {
           alert(
             "Vous n'avez pas les droits pour modifier ce post ou le post est vide."
           );
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
+  }
+
+  // Fonction qui crée un comment
+  const [textComment, setTextComment] = useState("");
+
+  function createComment(postId) {
+    fetch(`http://localhost:3000/api/comments/${postId}`, {
+      method: "POST",
+      body: JSON.stringify({
+        text: textComment,
+      }),
+      headers: {
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          window.location.reload();
+        } else {
+          alert("Votre commentaire est vide, veuillez réessayer");
         }
       })
       .catch((error) => alert("Erreur : " + error));
@@ -130,7 +153,7 @@ function Wall() {
             </div>
             <div>
 
-              {/* ///////////////////////////////////////////////////// */}
+              {/* Form Modify Posts */}
               <div>
                 <form action="">
                   <textarea
@@ -146,11 +169,12 @@ function Wall() {
                     id="img-createPost"
                     onChange={() => setImg(inputRef.current.files[0])}
                     ref={inputRef}
+                    required
                   ></input>
                 </form>
               </div>
-              {/* ///////////////////////////////////////////////////// */}
-              
+              {/* Form Modify Post */}
+
             </div>
             <div className="g-div-wall-posts-text">{item.text}</div>
             <div className="g-div-wall-posts-img">
@@ -160,6 +184,8 @@ function Wall() {
 
           {/* Comments */}
           <h4>Commentaires ({item.Comments.length})</h4>
+
+          {/* ///////////////// Form Create Comment */}
           <div className="g-div-wall-comments-edit">
             <form className="g-div-wall-comments-edit">
               <textarea
@@ -167,10 +193,17 @@ function Wall() {
                 id="text-createPost"
                 rows="2"
                 placeholder="Commentaire..."
+                value={textComment}
+                onChange={(e) => setTextComment(e.target.value)}
+                required
               ></textarea>
-              <button className="g-button-modify-comment">Commenter</button>
+              <button className="g-button-modify-comment" onClick={function preventDefault(e) {
+                  e.preventDefault();
+                  createComment(item.id);
+                }}>Commenter</button>
             </form>
           </div>
+          {/* ///////////////// Form Create Comment */}
 
           {/* Mapping des comments */}
           {item.Comments.map((comment) => (

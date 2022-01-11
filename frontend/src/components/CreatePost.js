@@ -12,7 +12,7 @@ function CreatePost() {
   formData.append("text", text);
   formData.append("image", img);
 
-  // Envoie des données à l'API pour la création de post
+  // Fonction de création de post
   function fetchPost(e) {
     e.preventDefault();
     fetch("http://localhost:3000/api/posts/", {
