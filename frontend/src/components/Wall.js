@@ -4,9 +4,11 @@ const moment = require("moment");
 require("moment/min/locales.min");
 moment.locale("fr");
 
-////////// LOGIQUE
+////////////////////////////////////////
+////////////// LOGIQUE /////////////////
+////////////////////////////////////////
 
-/* FONCTION WALL */
+/* ////////////////// COMPOSANT WALL ////////////////// */
 function Wall() {
   // Fonction qui vérifie le token en cas de manipulation de l'URL sans token
   function verifyToken() {
@@ -20,7 +22,9 @@ function Wall() {
   }
   verifyToken();
 
+  ////////////////////////////////////////////////////
   // Fonction qui récupère tous les posts de la BDD
+  //////////////////////////////////////////////////
   const [posts, setPosts] = useState([]);
 
   async function allPosts() {
@@ -33,7 +37,9 @@ function Wall() {
     return await res.json();
   }
 
+  //////////////////////////////////////////////////////////////
   // Fonction qui récupère les posts et les met dans un tableau
+  //////////////////////////////////////////////////////////////
   useEffect(() => {
     let mounted = true;
     allPosts().then((items) => {
@@ -44,7 +50,9 @@ function Wall() {
     return () => (mounted = false);
   }, []);
 
+  /////////////////////////////////
   // Fonction qui supprime un post
+  /////////////////////////////////
   function deletePost(postId) {
     fetch(`http://localhost:3000/api/posts/${postId}`, {
       method: "DELETE",
@@ -62,7 +70,9 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
+  ////////////////////////////////
   // Fonction qui modifie un post
+  ////////////////////////////////
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const inputRef = useRef();
@@ -90,25 +100,9 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
-  // Fonction qui supprime un comment
-  function deleteComment(commentId) {
-    fetch(`http://localhost:3000/api/comments/${commentId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        } else {
-          alert("Vous n'avez pas les droits pour supprimer ce commentaire.");
-        }
-      })
-      .catch((error) => alert("Erreur : " + error));
-  }
-
+  ////////////////////////////////
   // Fonction qui crée un comment
+  ////////////////////////////////
   const [textCreateComment, setTextCreateComment] = useState("");
 
   function createComment(postId) {
@@ -132,16 +126,66 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
-  ////////// STRUCTURE
+  ////////////////////////////////////
+  // Fonction qui supprime un comment
+  ////////////////////////////////////
+  function deleteComment(commentId) {
+    fetch(`http://localhost:3000/api/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert("Vous n'avez pas les droits pour supprimer ce commentaire.");
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
+  }
+
+  ///////////////////////////////////
+  // Fonction qui modifie un comment
+  ///////////////////////////////////
+  const [textModifyComment, setTextModifyComment] = useState("");
+
+  function modifyComment(commentId) {
+    fetch(`http://localhost:3000/api/comments/${commentId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        text: textModifyComment,
+      }),
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert(
+            "Vous n'avez pas les droits pour modifier ce commentaire ou le commentaire est vide."
+          );
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
+  }
+
+  ////////////////////////////////////////
+  ////////////// STRUCTURE ///////////////
+  ////////////////////////////////////////
   return (
-    /* Wall */
+    /* Wall Post */
     <div className="g-div-allWall">
       {/* Mapping et affichage des posts */}
       {posts.map((post) => (
         <div key={post.id} className="g-div-wall">
           <h3>Post #{post.id}</h3>
 
-          {/* Posts */}
+          {/* Post */}
           <div className="g-div-wall-posts">
             <div className="g-div-wall-posts-header">
               <div className="g-div-wall-posts-header-last">
@@ -172,6 +216,7 @@ function Wall() {
               </button>
             </div>
             <div>
+
               {/* Form Modify Posts */}
               <div>
                 <form action="">
@@ -193,6 +238,7 @@ function Wall() {
                 </form>
               </div>
               {/* Form Modify Post */}
+
             </div>
             <div className="g-div-wall-posts-text">{post.text}</div>
             <div className="g-div-wall-posts-img">
@@ -200,7 +246,7 @@ function Wall() {
             </div>
           </div>
 
-          {/* Comments */}
+          {/* Comment */}
           <h4>Commentaires ({post.Comments.length})</h4>
 
           {/* Form Create Comment */}
@@ -250,8 +296,32 @@ function Wall() {
                 >
                   Supprimer
                 </button>
-                <button className="g-button-modify-comment">Modifier</button>
+                <button
+                  className="g-button-modify-comment"
+                  onClick={function preventDefault(e) {
+                    e.preventDefault();
+                    modifyComment(comment.id);
+                  }}
+                >
+                  Modifier
+                </button>
               </div>
+
+              {/* Form Modify Comment */}
+              <div>
+                <form action="">
+                  <textarea
+                    id="text-createPost"
+                    rows="2"
+                    placeholder="Modifiez votre commentaire"
+                    value={textModifyComment}
+                    onChange={(e) => setTextModifyComment(e.target.value)}
+                    required
+                  ></textarea>
+                </form>
+              </div>
+              {/* Form Modify Comment */}
+
               <div className="g-div-wall-comments-text">{comment.text}</div>
             </div>
           ))}
