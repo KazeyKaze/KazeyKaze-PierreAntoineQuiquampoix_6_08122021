@@ -2,7 +2,6 @@ import "../styles/Buttons.css";
 
 ////////// LOGIQUE
 function Buttons() {
-
   // fonction qui déconnecte l'utilisateur et le renvoi à la page de connexion
   function disconnect(e) {
     e.preventDefault();

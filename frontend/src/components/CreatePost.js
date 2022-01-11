@@ -26,9 +26,7 @@ function CreatePost() {
         if (res.status === 201) {
           window.location.reload();
         } else {
-          alert(
-            "Votre post est vide, veuillez réessayer"
-          );
+          alert("Votre post est vide, veuillez réessayer");
         }
       })
       .catch((error) => alert("Erreur : " + error));
