@@ -90,14 +90,32 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
+  // Fonction qui supprime un comment
+  function deleteComment(commentId) {
+    fetch(`http://localhost:3000/api/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert("Vous n'avez pas les droits pour supprimer ce commentaire.");
+        }
+      })
+      .catch((error) => alert("Erreur : " + error));
+  }
+
   // Fonction qui crée un comment
-  const [textComment, setTextComment] = useState("");
+  const [textCreateComment, setTextCreateComment] = useState("");
 
   function createComment(postId) {
     fetch(`http://localhost:3000/api/comments/${postId}`, {
       method: "POST",
       body: JSON.stringify({
-        text: textComment,
+        text: textCreateComment,
       }),
       headers: {
         Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
@@ -115,20 +133,21 @@ function Wall() {
 
   ////////// STRUCTURE
   return (
+    /* Wall */
     <div className="g-div-allWall">
-      {/* Mapping des posts */}
-      {posts.map((item) => (
-        <div key={item.id} className="g-div-wall">
-          <h3>Post #{item.id}</h3>
+      {/* Mapping et affichage des posts */}
+      {posts.map((post) => (
+        <div key={post.id} className="g-div-wall">
+          <h3>Post #{post.id}</h3>
 
           {/* Posts */}
           <div className="g-div-wall-posts">
             <div className="g-div-wall-posts-header">
               <div className="g-div-wall-posts-header-last">
-                {item.User.firstName} {item.User.lastName}
+                {post.User.firstName} {post.User.lastName}
               </div>
               <div className="g-div-wall-posts-header-date">
-                {moment(item.createdAt).format("Do/M/YYYY à HH:mm")}
+                {moment(post.createdAt).format("Do/M/YYYY à HH:mm")}
               </div>
             </div>
             <div className="g-div-wall-buttons">
@@ -136,7 +155,7 @@ function Wall() {
                 className="g-button-delete-post"
                 onClick={function preventDefault(e) {
                   e.preventDefault();
-                  deletePost(item.id);
+                  deletePost(post.id);
                 }}
               >
                 Supprimer
@@ -145,14 +164,13 @@ function Wall() {
                 className="g-button-modify-post"
                 onClick={function preventDefault(e) {
                   e.preventDefault();
-                  modifyPost(item.id);
+                  modifyPost(post.id);
                 }}
               >
                 Modifier
               </button>
             </div>
             <div>
-
               {/* Form Modify Posts */}
               <div>
                 <form action="">
@@ -174,18 +192,17 @@ function Wall() {
                 </form>
               </div>
               {/* Form Modify Post */}
-
             </div>
-            <div className="g-div-wall-posts-text">{item.text}</div>
+            <div className="g-div-wall-posts-text">{post.text}</div>
             <div className="g-div-wall-posts-img">
-              <img src={item.image} alt={item.image}></img>
+              <img src={post.image} alt={post.image}></img>
             </div>
           </div>
 
           {/* Comments */}
-          <h4>Commentaires ({item.Comments.length})</h4>
+          <h4>Commentaires ({post.Comments.length})</h4>
 
-          {/* ///////////////// Form Create Comment */}
+          {/* Form Create Comment */}
           <div className="g-div-wall-comments-edit">
             <form className="g-div-wall-comments-edit">
               <textarea
@@ -193,32 +210,45 @@ function Wall() {
                 id="text-createPost"
                 rows="2"
                 placeholder="Commentaire..."
-                value={textComment}
-                onChange={(e) => setTextComment(e.target.value)}
+                value={textCreateComment}
+                onChange={(e) => setTextCreateComment(e.target.value)}
                 required
               ></textarea>
-              <button className="g-button-modify-comment" onClick={function preventDefault(e) {
+              <button
+                className="g-button-modify-comment"
+                onClick={function preventDefault(e) {
                   e.preventDefault();
-                  createComment(item.id);
-                }}>Commenter</button>
+                  createComment(post.id);
+                }}
+              >
+                Commenter
+              </button>
             </form>
           </div>
-          {/* ///////////////// Form Create Comment */}
+          {/* Form Create Comment */}
 
-          {/* Mapping des comments */}
-          {item.Comments.map((comment) => (
+          {/* Mapping et affichage des comments */}
+          {post.Comments.map((comment) => (
             <div key={comment.id} className="g-div-wall-comments">
               <div className="g-div-wall-comments-header">
                 <div className="g-div-wall-comments-header-last">
-                  {item.Comments[0].User.firstName}{" "}
-                  {item.Comments[0].User.lastName}
+                  {post.Comments[0].User.firstName}{" "}
+                  {post.Comments[0].User.lastName}
                 </div>
                 <div className="g-div-wall-comments-header-date">
                   {moment(comment.createdAt).format("Do/M/YYYY à HH:mm")}
                 </div>
               </div>
               <div className="g-div-wall-buttons">
-                <button className="g-button-delete-comment">Supprimer</button>
+                <button
+                  className="g-button-delete-comment"
+                  onClick={function preventDefault(e) {
+                    e.preventDefault();
+                    deleteComment(comment.id);
+                  }}
+                >
+                  Supprimer
+                </button>
                 <button className="g-button-modify-comment">Modifier</button>
               </div>
               <div className="g-div-wall-comments-text">{comment.text}</div>
