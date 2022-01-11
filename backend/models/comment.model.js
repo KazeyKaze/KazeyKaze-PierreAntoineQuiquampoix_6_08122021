@@ -7,7 +7,6 @@ const DataTypes = require("sequelize");
 const Comment = db.define("Comment", {
   text: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
 });
 

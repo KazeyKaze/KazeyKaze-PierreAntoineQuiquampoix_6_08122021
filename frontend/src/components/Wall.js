@@ -118,6 +118,7 @@ function Wall() {
         text: textCreateComment,
       }),
       headers: {
+        "content-type": "application/json",
         Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
       },
     })

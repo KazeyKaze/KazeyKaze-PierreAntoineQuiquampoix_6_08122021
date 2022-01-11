@@ -85,22 +85,24 @@ exports.deletePost = (req, res, next) => {
   })
     .then((post) => {
       if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-        const filename = post.image.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-          PostModel.destroy({
-            where: { id: req.params.id },
-          })
-            .then(() =>
-              res.status(200).json({
-                message: "Post supprimé !",
-              })
-            )
-            .catch((error) =>
-              res.status(400).json({
-                error,
-              })
-            );
-        });
+        if (post.image) {
+          const filename = post.image.split("/images/")[1];
+          fs.unlink(`images/${filename}`);
+        }
+
+        PostModel.destroy({
+          where: { id: req.params.id },
+        })
+          .then(() =>
+            res.status(200).json({
+              message: "Post supprimé !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
       } else {
         res.status(403).json({
           message: "403: unauthorized request !",
