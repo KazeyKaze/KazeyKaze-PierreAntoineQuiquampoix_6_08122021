@@ -23,10 +23,8 @@ function Wall() {
   verifyToken();
 
   ////////////////////////////////////////////////////
-  // Fonction qui récupère tous les posts de la BDD
+  // Fonction GET ALL POST
   //////////////////////////////////////////////////
-  const [posts, setPosts] = useState([]);
-
   async function allPosts() {
     const res = await fetch("http://localhost:3000/api/posts", {
       method: "GET",
@@ -40,6 +38,8 @@ function Wall() {
   //////////////////////////////////////////////////////////////
   // Fonction qui récupère les posts et les met dans un tableau
   //////////////////////////////////////////////////////////////
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     let mounted = true;
     allPosts().then((items) => {
@@ -51,7 +51,7 @@ function Wall() {
   }, []);
 
   /////////////////////////////////
-  // Fonction qui supprime un post
+  // Fonction DELETE POST
   /////////////////////////////////
   function deletePost(postId) {
     fetch(`http://localhost:3000/api/posts/${postId}`, {
@@ -71,7 +71,7 @@ function Wall() {
   }
 
   ////////////////////////////////
-  // Fonction qui modifie un post
+  // Fonction MODIFY POST
   ////////////////////////////////
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
@@ -101,7 +101,7 @@ function Wall() {
   }
 
   ////////////////////////////////
-  // Fonction qui crée un comment
+  // Fonction CREATE COMMENT
   ////////////////////////////////
   const [textCreateComment, setTextCreateComment] = useState("");
 
@@ -127,7 +127,7 @@ function Wall() {
   }
 
   ////////////////////////////////////
-  // Fonction qui supprime un comment
+  // Fonction DELETE COMMENT
   ////////////////////////////////////
   function deleteComment(commentId) {
     fetch(`http://localhost:3000/api/comments/${commentId}`, {
@@ -147,7 +147,7 @@ function Wall() {
   }
 
   ///////////////////////////////////
-  // Fonction qui modifie un comment
+  // Fonction MODIFY COMMENT
   ///////////////////////////////////
   const [textModifyComment, setTextModifyComment] = useState("");
 
@@ -183,7 +183,7 @@ function Wall() {
       {/* Mapping et affichage des posts */}
       {posts.map((post) => (
         <div key={post.id} className="g-div-wall">
-          <h3>Post #{post.id}</h3>
+          <h2 className="g-div-wall-titre">Post #{post.id}</h2>
 
           {/* Post */}
           <div className="g-div-wall-posts">
@@ -216,7 +216,6 @@ function Wall() {
               </button>
             </div>
             <div>
-
               {/* Form Modify Posts */}
               <div>
                 <form action="">
@@ -238,7 +237,6 @@ function Wall() {
                 </form>
               </div>
               {/* Form Modify Post */}
-
             </div>
             <div className="g-div-wall-posts-text">{post.text}</div>
             <div className="g-div-wall-posts-img">
@@ -247,7 +245,7 @@ function Wall() {
           </div>
 
           {/* Comment */}
-          <h4>Commentaires ({post.Comments.length})</h4>
+          <h3>Commentaires ({post.Comments.length})</h3>
 
           {/* Form Create Comment */}
           <div className="g-div-wall-comments-edit">

@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 
 ////////// LOGIQUE
 
-/* FONCTION CREATEPOST */
+/* COMPOSANT CREATEPOST */
 function CreatePost() {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
@@ -12,7 +12,7 @@ function CreatePost() {
   formData.append("text", text);
   formData.append("image", img);
 
-  // Fonction de création de post
+  // Fonction CREATE POST
   function fetchPost(e) {
     e.preventDefault();
     fetch("http://localhost:3000/api/posts/", {
@@ -35,7 +35,7 @@ function CreatePost() {
   ////////// STRUCTURE
   return (
     <div className="g-div-createPost">
-      <h3>Création de post</h3>
+      <h1 className="g-div-createPost-titre">Création de post</h1>
       <form action="">
         <textarea
           id="text-createPost"

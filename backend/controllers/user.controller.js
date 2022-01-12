@@ -100,6 +100,7 @@ exports.login = (req, res, next) => {
               }
             ),
             userId: user.id,
+            isAdmin: user.isAdmin,
           });
         })
         .catch((error) =>

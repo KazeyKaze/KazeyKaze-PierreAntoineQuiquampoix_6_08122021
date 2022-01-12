@@ -57,12 +57,7 @@ img {
 h3 {
   text-align: center;
   font-weight: 600;
-}
-
-h4 {
-  text-align: center;
   font-style: italic;
-  font-weight: 600;
 }
 
 .g-div-wall-comments {
@@ -130,4 +125,8 @@ h4 {
   font-size: 12px;
   padding: 4px;
   max-width: 80px;
+}
+
+.g-div-wall-titre {
+  text-align: center;
 }

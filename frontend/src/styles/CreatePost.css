@@ -55,3 +55,69 @@
   font-style: italic;
   letter-spacing: 0.05rem;
 }
+
+.g-div-createPost-titre {
+  text-align: center;
+  width: auto;
+  font-size: 26px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.g-div-allAdmin {
+  display: flex;
+  padding: 0.5rem;
+  align-items: center;
+  font-weight: 500;
+  border-bottom: 1px solid black;
+}
+
+.g-div-allAdmin-allName {
+  display: flex;
+  justify-content: center;
+  flex: auto;
+}
+
+.g-div-allAdmin-firstName,
+.g-div-allAdmin-lastName {
+  display: flex;
+  flex: 1;
+}
+
+.g-div-allAdmin-end {
+  text-align: center;
+  background-color: rgba(250, 104, 6, 0.8);
+  font-weight: 700;
+}
+
+.g-div-admin-header {
+  display: flex;
+  font-weight: 700;
+  border-bottom: 1px solid black;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  background-color: rgba(250, 104, 6, 0.8);
+  border-radius: 10px 10px 0 0;
+  text-decoration: underline;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.g-div-admin-header-lastname {
+  padding-right: 1.3rem;
+}
+
+.g-button-header-button {
+  margin: 5px 5px 0 3px;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
+  transform: none;
+  transition: none;
+}
+
+.g-button-header-button:hover {
+  transform: none;
+  transition: none;
+  cursor: initial;
+  color: rgba(236, 122, 46);
+}
