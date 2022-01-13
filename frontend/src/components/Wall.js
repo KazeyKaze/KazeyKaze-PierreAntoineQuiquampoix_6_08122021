@@ -24,7 +24,7 @@ function Wall() {
 
   ////////////////////////////////////////////////////
   // Fonction GET ALL POST
-  //////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
   async function allPosts() {
     const res = await fetch("http://localhost:3000/api/posts", {
       method: "GET",
@@ -100,9 +100,9 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
-  ////////////////////////////////
+  ////////////////////////////////////
   // Fonction CREATE COMMENT
-  ////////////////////////////////
+  ////////////////////////////////////
   const [textCreateComment, setTextCreateComment] = useState("");
 
   function createComment(postId) {
@@ -174,18 +174,94 @@ function Wall() {
       .catch((error) => alert("Erreur : " + error));
   }
 
+  ///////////////////////////////////
+  // Fonction DISPLAY MODIFY POST
+  ///////////////////////////////////
+  function displayModifyPost() {
+    const formModifyPosts = document.querySelectorAll(
+      ".g-div-form-modify-post"
+    );
+    const buttonModifyPosts = document.querySelectorAll(
+      ".g-button-modify-post"
+    );
+    formModifyPosts.forEach((formModifyPost) => {
+      if (formModifyPost.style.display === "block") {
+        formModifyPost.style.setProperty("display", "none");
+        buttonModifyPosts.forEach((button) => {
+          button.innerHTML = "Modifier";
+        });
+      } else {
+        formModifyPost.style.setProperty("display", "block");
+        buttonModifyPosts.forEach((button) => {
+          button.innerHTML = "Masquer";
+        });
+      }
+    });
+  }
+
+  ///////////////////////////////////
+  // Fonction DISPLAY MODIFY COMMENTS
+  ///////////////////////////////////
+  function displayModifyComment() {
+    const formModifyComments = document.querySelectorAll(
+      ".g-div-form-modify-comment"
+    );
+    const buttonModifyComments = document.querySelectorAll(
+      ".g-button-modify-comment"
+    );
+    formModifyComments.forEach((formModifyComment) => {
+      if (formModifyComment.style.display === "block") {
+        formModifyComment.style.setProperty("display", "none");
+        buttonModifyComments.forEach((button) => {
+          button.innerHTML = "Modifier";
+        });
+      } else {
+        formModifyComment.style.setProperty("display", "block");
+        buttonModifyComments.forEach((button) => {
+          button.innerHTML = "Masquer";
+        });
+      }
+    });
+  }
+
+  ///////////////////////////////////
+  // Fonction DISPLAY COMMENTS
+  ///////////////////////////////////
+  function displayComment() {
+    const comments = document.querySelectorAll(".g-div-wall-comments");
+    const buttonShowComments = document.querySelectorAll(
+      ".button-show-comments"
+    );
+    comments.forEach((comment) => {
+      if (comment.style.display === "block") {
+        comment.style.setProperty("display", "none");
+        buttonShowComments.forEach((button) => {
+          button.innerHTML = "Afficher";
+        });
+      } else {
+        comment.style.setProperty("display", "block");
+        buttonShowComments.forEach((button) => {
+          button.innerHTML = "Masquer";
+        });
+      }
+    });
+  }
+
   ////////////////////////////////////////
   ////////////// STRUCTURE ///////////////
   ////////////////////////////////////////
+
   return (
+    /*///////////*/
     /* Wall Post */
+    /*///////////*/
     <div className="g-div-allWall">
+      {/*////////////////////////////////*/}
       {/* Mapping et affichage des posts */}
+      {/*////////////////////////////////*/}
       {posts.map((post) => (
         <div key={post.id} className="g-div-wall">
           <h2 className="g-div-wall-titre">Post #{post.id}</h2>
-
-          {/* Post */}
           <div className="g-div-wall-posts">
             <div className="g-div-wall-posts-header">
               <div className="g-div-wall-posts-header-last">
@@ -207,18 +283,17 @@ function Wall() {
               </button>
               <button
                 className="g-button-modify-post"
-                onClick={function preventDefault(e) {
-                  e.preventDefault();
-                  modifyPost(post.id);
-                }}
+                onClick={displayModifyPost}
               >
                 Modifier
               </button>
             </div>
             <div>
+              {/*///////////////////*/}
               {/* Form Modify Posts */}
+              {/*///////////////////*/}
               <div>
-                <form action="">
+                <form action="" className="g-div-form-modify-post">
                   <textarea
                     id="text-createPost"
                     rows="2"
@@ -229,14 +304,26 @@ function Wall() {
                   ></textarea>
                   <input
                     type="file"
+                    accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
                     id="img-createPost"
                     onChange={() => setImg(inputRef.current.files[0])}
                     ref={inputRef}
                     required
                   ></input>
+                  <button
+                    className="g-button-send-modifyPost"
+                    onClick={function preventDefault(e) {
+                      e.preventDefault();
+                      modifyPost(post.id);
+                    }}
+                  >
+                    Envoyer
+                  </button>{" "}
                 </form>
               </div>
+              {/*//////////////////*/}
               {/* Form Modify Post */}
+              {/*//////////////////*/}
             </div>
             <div className="g-div-wall-posts-text">{post.text}</div>
             <div className="g-div-wall-posts-img">
@@ -244,10 +331,19 @@ function Wall() {
             </div>
           </div>
 
-          {/* Comment */}
-          <h3>Commentaires ({post.Comments.length})</h3>
+          {/*//////////*/}
+          {/* Comments */}
+          {/*//////////*/}
+          <h3>
+            Commentaires ({post.Comments.length})
+            <button className="button-show-comments" onClick={displayComment}>
+              Afficher
+            </button>
+          </h3>
 
+          {/*/////////////////////*/}
           {/* Form Create Comment */}
+          {/*/////////////////////*/}
           <div className="g-div-wall-comments-edit">
             <form className="g-div-wall-comments-edit">
               <textarea
@@ -260,7 +356,7 @@ function Wall() {
                 required
               ></textarea>
               <button
-                className="g-button-modify-comment"
+                className="g-button-create-comment"
                 onClick={function preventDefault(e) {
                   e.preventDefault();
                   createComment(post.id);
@@ -270,9 +366,13 @@ function Wall() {
               </button>
             </form>
           </div>
+          {/*/////////////////////*/}
           {/* Form Create Comment */}
+          {/*/////////////////////*/}
 
+          {/*///////////////////////////////////*/}
           {/* Mapping et affichage des comments */}
+          {/*///////////////////////////////////*/}
           {post.Comments.map((comment) => (
             <div key={comment.id} className="g-div-wall-comments">
               <div className="g-div-wall-comments-header">
@@ -296,17 +396,16 @@ function Wall() {
                 </button>
                 <button
                   className="g-button-modify-comment"
-                  onClick={function preventDefault(e) {
-                    e.preventDefault();
-                    modifyComment(comment.id);
-                  }}
+                  onClick={displayModifyComment}
                 >
                   Modifier
                 </button>
               </div>
 
+              {/*/////////////////////*/}
               {/* Form Modify Comment */}
-              <div>
+              {/*/////////////////////*/}
+              <div className="g-div-form-modify-comment">
                 <form action="">
                   <textarea
                     id="text-createPost"
@@ -316,9 +415,20 @@ function Wall() {
                     onChange={(e) => setTextModifyComment(e.target.value)}
                     required
                   ></textarea>
+                  <button
+                    className="g-button-send-modifyComment"
+                    onClick={function preventDefault(e) {
+                      e.preventDefault();
+                      modifyComment(comment.id);
+                    }}
+                  >
+                    Envoyer
+                  </button>
                 </form>
               </div>
+              {/*/////////////////////*/}
               {/* Form Modify Comment */}
+              {/*/////////////////////*/}
 
               <div className="g-div-wall-comments-text">{comment.text}</div>
             </div>

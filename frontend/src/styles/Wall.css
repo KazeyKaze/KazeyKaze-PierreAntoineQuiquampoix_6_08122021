@@ -68,6 +68,7 @@ h3 {
   width: 80%;
   margin-top: 0.5rem;
   background-color: rgba(178, 247, 236, 0.55);
+  display: none;
 }
 
 .g-div-wall-comments-header {
@@ -129,4 +130,39 @@ h3 {
 
 .g-div-wall-titre {
   text-align: center;
+}
+.g-button-send-modifyPost {
+  margin: 0 0 1rem 1rem;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
+}
+
+.g-div-form-modify-post {
+  display: none;
+}
+
+.g-button-send-modifyComment {
+  margin: 0.3rem 0 1rem 1rem;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
+}
+
+.g-div-form-modify-comment {
+  display: none;
+}
+
+.button-show-comments {
+  margin: 0.3rem 0 1rem 1rem;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
+}
+
+.g-button-create-comment {
+  margin: 5px 5px 0 3px;
+  font-size: 12px;
+  padding: 4px;
+  max-width: 80px;
 }
