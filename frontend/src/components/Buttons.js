@@ -12,26 +12,31 @@ function Buttons() {
   // Fonction pour supprimer le compte de l'utilisateur
   function deleteUser(e) {
     e.preventDefault();
-    const userId = sessionStorage.getItem("userId");
-    fetch(`http://localhost:3000/api/auth/${userId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
-      },
-    })
-      // Si la réponse est 200 alors l'utilisateur est supprimé
-      .then((res) => {
-        if (res.status === 200) {
-          alert(
-            "Votre compte a bien été supprimé, vous allez être redirigé vers l'écran de connexion."
-          );
-          window.location.href = "http://localhost:4000/";
-        } else {
-          alert("Une erreur est survenue, veuillez réessayer");
-        }
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+      const userId = sessionStorage.getItem("userId");
+      fetch(`http://localhost:3000/api/auth/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            sessionStorage.getItem("token")
+          )}`,
+        },
       })
-      .catch((error) => alert("Erreur : " + error));
+        // Si la réponse est 200 alors l'utilisateur est supprimé
+        .then((res) => {
+          if (res.status === 200) {
+            alert(
+              "Votre compte a bien été supprimé, vous allez être redirigé vers l'écran de connexion."
+            );
+            window.location.href = "http://localhost:4000/";
+          } else {
+            alert("Une erreur est survenue, veuillez réessayer");
+          }
+        })
+        .catch((error) => alert("Erreur : " + error));
+    }
   }
+
   // fonction qui déconnecte l'utilisateur et le renvoi à la page de connexion
   function accessAdmin(e) {
     const admin = JSON.parse(sessionStorage.getItem("isAdmin"));

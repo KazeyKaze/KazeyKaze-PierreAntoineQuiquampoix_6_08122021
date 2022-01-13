@@ -52,22 +52,44 @@ function AdminPage() {
     return () => (mounted = false);
   }, []);
 
-  // Fonction DELETE POST
+  // Fonction DELETE USER
+  // function deleteUser(userId) {
+  //   fetch(`http://localhost:3000/api/auth/${userId}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         window.location.reload();
+  //       } else {
+  //         alert("Une erreur s'est produite, veuillez réessayer.");
+  //       }
+  //     })
+  //     .catch((error) => alert("Erreur : " + error));
+  // }
   function deleteUser(userId) {
-    fetch(`http://localhost:3000/api/auth/${userId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        } else {
-          alert("Une erreur s'est produite, veuillez réessayer.");
-        }
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ?")) {
+      fetch(`http://localhost:3000/api/auth/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            sessionStorage.getItem("token")
+          )}`,
+        },
       })
-      .catch((error) => alert("Erreur : " + error));
+        // Si la réponse est 200 alors l'utilisateur est supprimé
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Le compte a bien été supprimé.");
+            Location.reload();
+          } else {
+            alert("Une erreur est survenue, veuillez réessayer");
+          }
+        })
+        .catch((error) => alert("Erreur : " + error));
+    }
   }
 
   //////// STRUCTURE
