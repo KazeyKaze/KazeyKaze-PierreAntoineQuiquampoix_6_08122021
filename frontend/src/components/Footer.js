@@ -23,7 +23,7 @@ function Footer() {
           }
         >
           <ul>
-            <li>Grouponania SA</li>
+            <li>Groupomania SA</li>
             <li>236 ZA du projet 7</li>
             <li>93170 Bagnolet-sur-OC</li>
           </ul>

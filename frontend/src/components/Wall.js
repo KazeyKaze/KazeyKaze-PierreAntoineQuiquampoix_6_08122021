@@ -440,8 +440,7 @@ function Wall() {
             <div key={comment.id} className="g-div-wall-comments">
               <div className="g-div-wall-comments-header">
                 <div className="g-div-wall-comments-header-last">
-                  {post.Comments[0].User.firstName}{" "}
-                  {post.Comments[0].User.lastName}
+                  {comment.User.firstName} {comment.User.lastName}
                 </div>
                 <div className="g-div-wall-comments-header-date">
                   {moment(comment.createdAt).format("Do/M/YYYY à HH:mm")}

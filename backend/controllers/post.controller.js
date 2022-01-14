@@ -9,7 +9,7 @@ const { where } = require("sequelize/dist");
 // POST
 ///////////////////////////////
 exports.createPost = (req, res, next) => {
-  if (!req.body.file && !req.body.text) {
+  if (req.body.image === "null" && !req.body.text) {
     return res
       .status(400)
       .json({ message: "Votre post ne peut pas être vide." });
@@ -85,11 +85,10 @@ exports.deletePost = (req, res, next) => {
   })
     .then((post) => {
       if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-        if (post.image) {
-          const filename = post.image.split("/images/")[1];
-          fs.unlink(`images/${filename}`);
-        }
-
+        // if (post.image) {
+        //   const filename = post.image.split("/images/")[1];
+        //   fs.unlink(`images/${filename}`);
+        // }
         PostModel.destroy({
           where: { id: req.params.id },
         })
