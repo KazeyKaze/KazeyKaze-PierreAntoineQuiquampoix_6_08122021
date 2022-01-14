@@ -85,10 +85,12 @@ exports.deletePost = (req, res, next) => {
   })
     .then((post) => {
       if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-        // if (post.image) {
-        //   const filename = post.image.split("/images/")[1];
-        //   fs.unlink(`images/${filename}`);
-        // }
+        if (post.image) {
+          const filename = post.image.split("/images/")[1];
+          fs.unlink(`images/${filename}`, function (err) {
+            if (err) console.log("error", err);
+          });
+        }
         PostModel.destroy({
           where: { id: req.params.id },
         })
