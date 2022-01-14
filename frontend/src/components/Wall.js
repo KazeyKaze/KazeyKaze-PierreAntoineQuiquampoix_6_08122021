@@ -246,71 +246,6 @@ function Wall() {
     });
   }
 
-  //////////////////// TEST ////////////////////
-  //////////////////// TEST ////////////////////
-  //////////////////// TEST ////////////////////
-
-  ///////////////////////////////////
-  // Fonction DISPLAY BUTTONS
-  ///////////////////////////////////
-  function displayButtons() {
-    const buttonsModifyPosts = document.querySelectorAll(
-      ".g-button-modify-post"
-    );
-    const buttonsDeletePosts = document.querySelectorAll(
-      ".g-button-delete-post"
-    );
-    // const buttonsModifyComments = document.querySelectorAll(
-    //   ".g-button-modify-comment"
-    // );
-    // const buttonsDeleteComments = document.querySelectorAll(
-    //   ".g-button-delete-comment"
-    // );
-    const connectedUserId = window.sessionStorage.getItem("userId");
-    const connectedUserAdmin = window.sessionStorage.getItem("isAdmin");
-
-    posts.map((post) =>
-      buttonsModifyPosts.forEach((buttonsModifyPost) => {
-        if (connectedUserAdmin !== "true" && connectedUserId !== post.UserId) {
-          buttonsModifyPost.style.setProperty("display", "none");
-          console.log(post.UserId);
-        } else {
-          buttonsModifyPost.style.setProperty("display", "block");
-        }
-      })
-    );
-
-    posts.map((post) =>
-      buttonsDeletePosts.forEach((buttonsDeletePost) => {
-        if (connectedUserAdmin !== "true" && connectedUserId !== post.UserId) {
-          buttonsDeletePost.style.setProperty("display", "none");
-        } else {
-          buttonsDeletePost.style.setProperty("display", "block");
-        }
-      })
-    );
-
-    // buttonsModifyComments.forEach((buttonsModifyComment) => {
-    //   if ("CONDITION") {
-    //     buttonsModifyComment.style.setProperty("display", "none");
-    //   } else {
-    //     buttonsModifyComment.style.setProperty("display", "block");
-    //   }
-    // });
-
-    // buttonsDeleteComments.forEach((buttonsDeleteComment) => {
-    //   if ("CONDITION") {
-    //     buttonsDeleteComment.style.setProperty("display", "none");
-    //   } else {
-    //     buttonsDeleteComment.style.setProperty("display", "block");
-    //   }
-    // });
-  }
-  displayButtons();
-  //////////////////// TEST ////////////////////
-  //////////////////// TEST ////////////////////
-  //////////////////// TEST ////////////////////
-
   ////////////////////////////////////////
   ////////////// STRUCTURE ///////////////
   ////////////////////////////////////////
@@ -362,7 +297,6 @@ function Wall() {
                     id="text-createPost"
                     rows="2"
                     placeholder="Modifiez votre message et/ou choisissez un fichier"
-                    value={text}
                     onChange={(e) => setText(e.target.value)}
                     required
                   ></textarea>
@@ -414,7 +348,6 @@ function Wall() {
                 id="text-createPost"
                 rows="2"
                 placeholder="Commentaire..."
-                value={textCreateComment}
                 onChange={(e) => setTextCreateComment(e.target.value)}
                 required
               ></textarea>
@@ -473,7 +406,6 @@ function Wall() {
                     id="text-createPost"
                     rows="2"
                     placeholder="Modifiez votre commentaire"
-                    value={textModifyComment}
                     onChange={(e) => setTextModifyComment(e.target.value)}
                     required
                   ></textarea>
