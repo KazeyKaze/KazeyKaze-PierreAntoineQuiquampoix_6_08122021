@@ -73,8 +73,9 @@ function Wall() {
   ////////////////////////////////
   // Fonction MODIFY POST
   ////////////////////////////////
-  const [text, setText] = useState("");
+  const [text, setText] = useState(posts.map((post) => post.text));
   const [img, setImg] = useState(null);
+
   const inputRef = useRef();
   let formData = new FormData();
   formData.append("text", text);
@@ -296,8 +297,8 @@ function Wall() {
                   <textarea
                     id="text-createPost"
                     rows="2"
+                    defaultValue={post.text}
                     placeholder="Modifiez votre message et/ou choisissez un fichier"
-                    value={post.text}
                     onChange={(e) => setText(e.target.value)}
                     required
                   ></textarea>
@@ -307,7 +308,6 @@ function Wall() {
                     id="img-createPost"
                     onChange={() => setImg(inputRef.current.files[0])}
                     ref={inputRef}
-                    required
                   ></input>
                   <button
                     className="g-button-send-modifyPost"
@@ -407,7 +407,7 @@ function Wall() {
                     id="text-createPost"
                     rows="2"
                     placeholder="Modifiez votre commentaire"
-                    value={comment.text}
+                    defaultValue={comment.text}
                     onChange={(e) => setTextModifyComment(e.target.value)}
                     required
                   ></textarea>
