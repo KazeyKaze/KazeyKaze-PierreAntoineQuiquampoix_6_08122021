@@ -297,6 +297,7 @@ function Wall() {
                     id="text-createPost"
                     rows="2"
                     placeholder="Modifiez votre message et/ou choisissez un fichier"
+                    value={post.text}
                     onChange={(e) => setText(e.target.value)}
                     required
                   ></textarea>
@@ -406,6 +407,7 @@ function Wall() {
                     id="text-createPost"
                     rows="2"
                     placeholder="Modifiez votre commentaire"
+                    value={comment.text}
                     onChange={(e) => setTextModifyComment(e.target.value)}
                     required
                   ></textarea>
