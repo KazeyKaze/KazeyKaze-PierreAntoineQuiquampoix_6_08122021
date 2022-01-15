@@ -49,25 +49,55 @@ exports.modifyPost = (req, res, next) => {
           .status(400)
           .json({ message: "Votre post ne peut pas être vide." });
       }
-      PostModel.update(
-        {
-          text: req.body.text,
-          image: req.file
-            ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            : null,
-        },
-        { where: { id: req.params.id } }
-      )
-        .then(() =>
-          res.status(200).json({
-            message: "Post modifié !",
-          })
+      if (post.image === null) {
+        const filename = post.image.split("/images/")[1];
+        fs.unlink(`images/${filename}`, function (err) {
+          if (err) console.log("error", err);
+        });
+        PostModel.update(
+          {
+            text: req.body.text,
+            image: req.file
+              ? `${req.protocol}://${req.get("host")}/images/${
+                  req.file.filename
+                }`
+              : null,
+          },
+          { where: { id: req.params.id } }
         )
-        .catch((error) =>
-          res.status(400).json({
-            error,
-          })
-        );
+          .then(() =>
+            res.status(200).json({
+              message: "Post modifié !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
+      } else {
+        PostModel.update(
+          {
+            text: req.body.text,
+            image: req.file
+              ? `${req.protocol}://${req.get("host")}/images/${
+                  req.file.filename
+                }`
+              : null,
+          },
+          { where: { id: req.params.id } }
+        )
+          .then(() =>
+            res.status(200).json({
+              message: "Post modifié !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
+      }
     } else {
       res.status(403).json({
         message: "403: unauthorized request !",

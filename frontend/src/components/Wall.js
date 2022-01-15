@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "../styles/Wall.css";
 const moment = require("moment");
 require("moment/min/locales.min");
@@ -73,10 +73,8 @@ function Wall() {
   ////////////////////////////////
   // Fonction MODIFY POST
   ////////////////////////////////
-  const [text, setText] = useState(posts.map((post) => post.text));
+  const [text, setText] = useState("");
   const [img, setImg] = useState(null);
-
-  const inputRef = useRef();
   let formData = new FormData();
   formData.append("text", text);
   formData.append("image", img);
@@ -300,14 +298,12 @@ function Wall() {
                     defaultValue={post.text}
                     placeholder="Modifiez votre message et/ou choisissez un fichier"
                     onChange={(e) => setText(e.target.value)}
-                    required
                   ></textarea>
                   <input
                     type="file"
                     accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
                     id="img-createPost"
-                    onChange={() => setImg(inputRef.current.files[0])}
-                    ref={inputRef}
+                    onChange={(e) => setImg(e.target.files[0])}
                   ></input>
                   <button
                     className="g-button-send-modifyPost"
