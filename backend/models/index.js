@@ -8,9 +8,9 @@ const initdb = async () => {
   await Comment.belongsTo(User, { onDelete: "cascade", onUpdate: "cascade" });
   await Post.hasMany(Comment);
 
-  await Post.sync({alter:true});
-  await User.sync();
-  await Comment.sync();
+  await Post.sync({ alter: true });
+  await User.sync({ alter: true });
+  await Comment.sync({ alter: true });
 };
 
 module.exports = initdb;

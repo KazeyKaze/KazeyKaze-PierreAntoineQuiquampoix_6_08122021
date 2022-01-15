@@ -49,7 +49,7 @@ exports.modifyPost = (req, res, next) => {
           .status(400)
           .json({ message: "Votre post ne peut pas être vide." });
       }
-      if (post.image === null) {
+      if (post.image !== null) {
         const filename = post.image.split("/images/")[1];
         fs.unlink(`images/${filename}`, function (err) {
           if (err) console.log("error", err);
