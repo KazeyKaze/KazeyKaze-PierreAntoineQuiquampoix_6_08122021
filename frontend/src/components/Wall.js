@@ -88,7 +88,7 @@ function Wall() {
       },
     })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           window.location.reload();
         } else {
           alert(

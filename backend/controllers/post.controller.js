@@ -42,31 +42,27 @@ exports.createPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
   PostModel.findOne({
     where: { id: req.params.id },
-  }).then((post) => {
-    if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-      if (!req.file && req.body.text == "") {
-        return res
-          .status(400)
-          .json({ message: "Votre post ne peut pas être vide." });
-      }
-      if (post.image !== null) {
-        const filename = post.image.split("/images/")[1];
-        fs.unlink(`images/${filename}`, function (err) {
-          if (err) console.log("error", err);
-        });
-        PostModel.update(
-          {
-            text: req.body.text,
-            image: req.file
-              ? `${req.protocol}://${req.get("host")}/images/${
-                  req.file.filename
-                }`
-              : null,
-          },
-          { where: { id: req.params.id } }
-        )
+  })
+    .then((post) => {
+      if (post.UserId === req.token.userId || req.token.isAdmin === true) {
+        if (req.file != undefined) {
+          if (post.image != undefined) {
+            const filename = post.image.split("/images/")[1];
+            fs.unlink(`images/${filename}`, function (err) {
+              if (err) console.log("error", err);
+            });
+          }
+          post.image = `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`;
+        }
+        if (req.body.text) {
+          post.text = req.body.text;
+        }
+        post
+          .save()
           .then(() =>
-            res.status(200).json({
+            res.status(201).json({
               message: "Post modifié !",
             })
           )
@@ -76,34 +72,16 @@ exports.modifyPost = (req, res, next) => {
             })
           );
       } else {
-        PostModel.update(
-          {
-            text: req.body.text,
-            image: req.file
-              ? `${req.protocol}://${req.get("host")}/images/${
-                  req.file.filename
-                }`
-              : null,
-          },
-          { where: { id: req.params.id } }
-        )
-          .then(() =>
-            res.status(200).json({
-              message: "Post modifié !",
-            })
-          )
-          .catch((error) =>
-            res.status(400).json({
-              error,
-            })
-          );
+        res.status(403).json({
+          message: "403: unauthorized request !",
+        });
       }
-    } else {
-      res.status(403).json({
-        message: "403: unauthorized request !",
-      });
-    }
-  });
+    })
+    .catch((err) =>
+      res.status(400).json({
+        err,
+      })
+    );
 };
 
 ///////////////////////////////
