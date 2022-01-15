@@ -37,34 +37,68 @@ exports.createComment = (req, res, next) => {
 exports.modifyComment = (req, res, next) => {
   CommentModel.findOne({
     where: { id: req.params.id },
-  }).then((comment) => {
-    if (comment.UserId === req.token.userId || req.token.isAdmin === true) {
-      if (req.body.text == "") {
-        return res
-          .status(400)
-          .json({ message: "Votre commentaire ne peut pas être vide." });
+  })
+    .then((comment) => {
+      if (comment.UserId === req.token.userId || req.token.isAdmin === true) {
+        if (req.body.text == "") {
+          return res
+            .status(400)
+            .json({ message: "Votre commentaire ne peut pas être vide." });
+        }
+        if (req.body.text) {
+          comment.text = req.body.text;
+          
+        }
+        comment
+          .save({ where: { id: req.params.id } })
+          .then(() =>
+            res.status(201).json({
+              message: "Commentaire modifié !",
+            })
+          )
+          .catch((error) =>
+            res.status(400).json({
+              error,
+            })
+          );
+      } else {
+        res.status(403).json({
+          message: "403: unauthorized request !",
+        });
       }
-      CommentModel.update(
-        { text: req.body.text },
-        { where: { id: req.params.id } }
-      )
-        .then(() =>
-          res.status(200).json({
-            message: "Commentaire modifié !",
-          })
-        )
-        .catch((error) =>
-          res.status(400).json({
-            error,
-          })
-        );
-    } else {
-      res.status(403).json({
-        message: "403: unauthorized request !",
-      });
-    }
-  });
+    })
+    .catch((err) =>
+      res.status(400).json({
+        err,
+      })
+    );
 };
+//       if (req.body.text == "") {
+//         return res
+//           .status(400)
+//           .json({ message: "Votre commentaire ne peut pas être vide." });
+//       }
+//       CommentModel.update(
+//         { text: req.body.text },
+//         { where: { id: req.params.id } }
+//       )
+//         .then(() =>
+//           res.status(200).json({
+//             message: "Commentaire modifié !",
+//           })
+//         )
+//         .catch((error) =>
+//           res.status(400).json({
+//             error,
+//           })
+//         );
+//     } else {
+//       res.status(403).json({
+//         message: "403: unauthorized request !",
+//       });
+//     }
+//   });
+// };
 
 ///////////////////////////////
 // DELETE

@@ -169,7 +169,7 @@ exports.modifyUser = (req, res, next) => {
         { where: { id: req.params.id } }
       )
         .then(() =>
-          res.status(200).json({
+          res.status(201).json({
             message: "Informations modifiées !",
           })
         )
