@@ -1,7 +1,9 @@
-Les informations de connexion à la BDD dont dans le fichier .env
+- "npm install" dans le terminal de "backend".
 
-Créez un dossier "images" dans le dossier "backend
+- "npm start" dans le terminal de "backend".
 
-"npm install" sur "backend"
+- Créez un dossier "images" dans le dossier "backend".
 
-"npm start" sur "backend"
+- Les informations de connexion à la BDD sont dans le fichier ".env".
+
+- Le port 3000 est utilisé.
