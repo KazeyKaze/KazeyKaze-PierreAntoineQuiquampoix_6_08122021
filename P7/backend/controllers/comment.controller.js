@@ -47,10 +47,9 @@ exports.modifyComment = (req, res, next) => {
         }
         if (req.body.text) {
           comment.text = req.body.text;
-          
         }
         comment
-          .save({ where: { id: req.params.id } })
+          .save()
           .then(() =>
             res.status(201).json({
               message: "Commentaire modifié !",
@@ -73,32 +72,6 @@ exports.modifyComment = (req, res, next) => {
       })
     );
 };
-//       if (req.body.text == "") {
-//         return res
-//           .status(400)
-//           .json({ message: "Votre commentaire ne peut pas être vide." });
-//       }
-//       CommentModel.update(
-//         { text: req.body.text },
-//         { where: { id: req.params.id } }
-//       )
-//         .then(() =>
-//           res.status(200).json({
-//             message: "Commentaire modifié !",
-//           })
-//         )
-//         .catch((error) =>
-//           res.status(400).json({
-//             error,
-//           })
-//         );
-//     } else {
-//       res.status(403).json({
-//         message: "403: unauthorized request !",
-//       });
-//     }
-//   });
-// };
 
 ///////////////////////////////
 // DELETE
