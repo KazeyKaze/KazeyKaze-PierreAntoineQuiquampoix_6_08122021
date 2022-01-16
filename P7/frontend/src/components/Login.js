@@ -24,17 +24,15 @@ const Login = () => {
       .then((res) => {
         return res.json();
       })
-      // Si un token a été renvoyé, alors, redirection vers la page mur
       .then((data) => {
-        console.log(data);
         sessionStorage.setItem("token", JSON.stringify(data.token));
         sessionStorage.setItem("userId", JSON.stringify(data.userId));
         sessionStorage.setItem("isAdmin", JSON.stringify(data.isAdmin));
         const token = data.token;
-        if (token !== null || token !== undefined) {
+        if (token) {
           window.location.href = "http://localhost:4000/wall";
         } else {
-          alert("Utilisateur non identifié ou mot de passe incorrect");
+          alert("Email et/ou mot de passe incorrect.");
         }
       })
       .catch((error) => alert("Erreur : " + error));
