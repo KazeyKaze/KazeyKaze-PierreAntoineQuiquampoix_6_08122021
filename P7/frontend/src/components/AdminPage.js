@@ -8,9 +8,9 @@ function AdminPage() {
     const admin = JSON.parse(sessionStorage.getItem("isAdmin"));
     if (admin !== true) {
       alert(
-        "Erreur d'identification, vous allez être redirigé vers la page des publications."
+        "Erreur d'identification, vous allez être redirigé vers la page de connexion."
       );
-      window.location.href = "http://localhost:4000/wall";
+      window.location.href = "http://localhost:4000/";
     }
   }
   verifyAdmin();
@@ -53,22 +53,6 @@ function AdminPage() {
   }, []);
 
   // Fonction DELETE USER
-  // function deleteUser(userId) {
-  //   fetch(`http://localhost:3000/api/auth/${userId}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         window.location.reload();
-  //       } else {
-  //         alert("Une erreur s'est produite, veuillez réessayer.");
-  //       }
-  //     })
-  //     .catch((error) => alert("Erreur : " + error));
-  // }
   function deleteUser(userId) {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce compte ?")) {
       fetch(`http://localhost:3000/api/auth/${userId}`, {
