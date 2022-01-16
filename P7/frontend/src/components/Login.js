@@ -68,7 +68,7 @@ const Login = () => {
             "Votre compte a bien été crée, veuillez à présent vous connecter."
           );
         } else {
-          alert("Une erreur est survenue, veuillez réessayer");
+          alert("L'email et/ou le mot de passe ne sont pas valides !");
         }
       })
       .catch((error) => alert("Erreur : " + error));
@@ -153,6 +153,11 @@ const Login = () => {
               onChange={(e) => setPasswordSignup(e.target.value)}
               required
             />
+            <ul className="g-ul-specs">
+              <li>6 à 30 caractères</li>
+              <li>1 chiffre minimum</li>
+              <li>Espaces interdits</li>
+            </ul>
           </div>
           <div>
             <label htmlFor="firstname">
