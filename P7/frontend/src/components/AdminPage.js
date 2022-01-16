@@ -67,7 +67,7 @@ function AdminPage() {
         .then((res) => {
           if (res.status === 200) {
             alert("Le compte a bien été supprimé.");
-            Location.reload();
+            window.location.reload();
           } else {
             alert("Une erreur est survenue, veuillez réessayer");
           }

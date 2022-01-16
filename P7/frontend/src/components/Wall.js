@@ -54,20 +54,24 @@ function Wall() {
   // Fonction DELETE POST
   /////////////////////////////////
   function deletePost(postId) {
-    fetch(`http://localhost:3000/api/posts/${postId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(sessionStorage.getItem("token"))}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        } else {
-          alert("Vous n'avez pas les droits pour supprimer ce post.");
-        }
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce post ?")) {
+      fetch(`http://localhost:3000/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            sessionStorage.getItem("token")
+          )}`,
+        },
       })
-      .catch((error) => alert("Erreur : " + error));
+        .then((res) => {
+          if (res.status === 200) {
+            window.location.reload();
+          } else {
+            alert("Vous n'avez pas les droits pour supprimer ce post.");
+          }
+        })
+        .catch((error) => alert("Erreur : " + error));
+    }
   }
 
   ////////////////////////////////
