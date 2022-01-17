@@ -7,7 +7,7 @@ BACKEND:
 
 - Créez un dossier "images" dans le dossier "backend".
 
-- Importez le fichier "groupomania.sql" (qui se trouve dans le dossier "Build-BDD") dans MySQL.
+- Importez le fichier "groupomania.sql" (qui se trouve dans le dossier "Build-BDD") dans MySQL. (Identifiants de l'admin = marie@mail.com / test33)
 
 - Les informations de connexion à la BDD sont dans le fichier ".env".
 
