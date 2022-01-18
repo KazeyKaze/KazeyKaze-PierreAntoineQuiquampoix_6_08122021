@@ -1,5 +1,3 @@
-- La marche à suivre pour démarer ce projet est indiquée dans les fichiers Readme des sous-dossiers "backend" et "frontend".
-
 ------------------------------------------------------------------------
 BACKEND:
 ------------------------------------------------------------------------
@@ -7,7 +5,10 @@ BACKEND:
 
 - Créez un dossier "images" dans le dossier "backend".
 
-- Importez le fichier "groupomania.sql" (qui se trouve dans le dossier "Build-BDD") dans MySQL. (Identifiants de l'admin = marie@mail.com / test33)
+- Créez la base de données dans MySQL puis importez le fichier "groupomania.sql" (qui se trouve dans le dossier "Build-BDD") dans MySQL.
+(Identifiants de l'admin = marie@mail.com / test33)
+
+- Suivez les instructions dans le fichier "\ backend \ models \ index.js"
 
 - Les informations de connexion à la BDD sont dans le fichier ".env".
 
