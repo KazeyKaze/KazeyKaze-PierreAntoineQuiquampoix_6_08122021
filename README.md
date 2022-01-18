@@ -1,5 +1,3 @@
-- La marche à suivre pour démarer ce projet est indiquée dans les fichiers Readme des sous-dossiers "backend" et "frontend".
-
 --------------------------------------------------------------------------------------------------
 BACKEND:
 --------------------------------------------------------------------------------------------------
