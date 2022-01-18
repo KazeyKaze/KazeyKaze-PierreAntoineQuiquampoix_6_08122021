@@ -8,11 +8,11 @@ BACKEND:
 - Créez la base de données dans MySQL puis importez le fichier "groupomania.sql" (qui se trouve dans le dossier "Build-BDD") dans MySQL.
 (Identifiants de l'admin = marie@mail.com / test33)
 
-- Suivez les instructions dans le fichier "\ backend \ models \ index.js"
-
 - Les informations de connexion à la BDD sont dans le fichier ".env".
 
 - Tapez "npm start" dans le terminal de "backend".
+
+- Suivez les instructions dans le fichier "\ backend \ models \ index.js" si la connection à la BDD ne se fait pas.
 
 - Le port 3000 est utilisé.
 ------------------------------------------------------------------------
