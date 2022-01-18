@@ -32,9 +32,9 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`),
   KEY `PostId` (`PostId`),
   KEY `UserId` (`UserId`),
-  CONSTRAINT `Comments_ibfk_57` FOREIGN KEY (`PostId`) REFERENCES `posts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Comments_ibfk_57` FOREIGN KEY (`PostId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Comments_ibfk_58` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   KEY `UserId` (`UserId`),
   CONSTRAINT `Posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,36 +93,7 @@ CREATE TABLE `users` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `email_2` (`email`),
-  UNIQUE KEY `email_3` (`email`),
-  UNIQUE KEY `email_4` (`email`),
-  UNIQUE KEY `email_5` (`email`),
-  UNIQUE KEY `email_6` (`email`),
-  UNIQUE KEY `email_7` (`email`),
-  UNIQUE KEY `email_8` (`email`),
-  UNIQUE KEY `email_9` (`email`),
-  UNIQUE KEY `email_10` (`email`),
-  UNIQUE KEY `email_11` (`email`),
-  UNIQUE KEY `email_12` (`email`),
-  UNIQUE KEY `email_13` (`email`),
-  UNIQUE KEY `email_14` (`email`),
-  UNIQUE KEY `email_15` (`email`),
-  UNIQUE KEY `email_16` (`email`),
-  UNIQUE KEY `email_17` (`email`),
-  UNIQUE KEY `email_18` (`email`),
-  UNIQUE KEY `email_19` (`email`),
-  UNIQUE KEY `email_20` (`email`),
-  UNIQUE KEY `email_21` (`email`),
-  UNIQUE KEY `email_22` (`email`),
-  UNIQUE KEY `email_23` (`email`),
-  UNIQUE KEY `email_24` (`email`),
-  UNIQUE KEY `email_25` (`email`),
-  UNIQUE KEY `email_26` (`email`),
-  UNIQUE KEY `email_27` (`email`),
-  UNIQUE KEY `email_28` (`email`),
-  UNIQUE KEY `email_29` (`email`),
-  UNIQUE KEY `email_30` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
