@@ -9,8 +9,6 @@ BACKEND:
 - Les informations de connexion à la BDD sont dans le fichier ".env".
 
 - Tapez "npm start" dans le terminal de "backend".
-
-(Si la connection à la BDD ne se fait toujours pas, suivez les instructions dans le fichier "\ backend \ models \ index.js")
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------

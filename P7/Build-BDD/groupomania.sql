@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: groupomania
+-- Host: localhost    Database: groupomaniaKazey
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `Comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `Comments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `text` text,
@@ -31,12 +31,12 @@ CREATE TABLE `Comments` (
   `UserId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `PostId` (`PostId`),
-  KEY `UserId` (`UserId`),
-  CONSTRAINT `Comments_ibfk_57` FOREIGN KEY (`PostId`) REFERENCES `Posts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Comments_ibfk_58` FOREIGN KEY (`UserId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `UserId` (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+ALTER TABLE Comments
+ADD CONSTRAINT `Comments_ibfk_57` FOREIGN KEY (`PostId`) REFERENCES `Posts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Comments_ibfk_58` FOREIGN KEY (`UserId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Dumping data for table `Comments`
 --
@@ -52,7 +52,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `Posts` (
   `id` int NOT NULL AUTO_INCREMENT,
   `text` text,
@@ -61,11 +61,11 @@ CREATE TABLE `Posts` (
   `updatedAt` datetime NOT NULL,
   `UserId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `UserId` (`UserId`),
-  CONSTRAINT `Posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `UserId` (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+ALTER TABLE Comments
+ADD CONSTRAINT `Posts_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Dumping data for table `Posts`
 --
@@ -81,7 +81,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `Users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `Users` (
   UNIQUE KEY `email_28` (`email`),
   UNIQUE KEY `email_29` (`email`),
   UNIQUE KEY `email_30` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
